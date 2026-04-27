@@ -1,0 +1,847 @@
+{
+  "schema_version": "v2",
+  "profile": {
+    "role": "Graduate Research Assistant & Mechanical Engineer",
+    "industry": "Mechanical Engineering / Computational Mechanics",
+    "seniority": "Early Career / Graduate"
+  },
+  "theme": {
+    "style": "modern-clean",
+    "color_palette": [],
+    "font": "sans",
+    "tone": "professional-academic",
+    "max_width": "1280px",
+    "width": "100%",
+    "margin": "0 auto",
+    "display": "flex",
+    "flex_direction": "column",
+    "align_items": "center"
+  },
+  "sections": [
+    {
+      "type": "navbar",
+      "priority": null,
+      "layout": {
+        "type": null,
+        "direction": null,
+        "gap": null,
+        "align": null,
+        "justify": null,
+        "width": null,
+        "max_width": null,
+        "margin": null,
+        "columns": null,
+        "slots": null,
+        "variant": null,
+        "desktop": {
+          "type": "flex",
+          "direction": null,
+          "gap": "2rem",
+          "align": "center",
+          "justify": "space-between",
+          "width": null,
+          "max_width": null,
+          "margin": null,
+          "columns": null,
+          "slots": {
+            "left": [
+              {
+                "name": "logo",
+                "type": "image",
+                "optional": true
+              },
+              {
+                "name": "name",
+                "type": "text",
+                "optional": false
+              }
+            ],
+            "right": [
+              {
+                "name": "links",
+                "type": null,
+                "optional": false
+              },
+              {
+                "name": "cta",
+                "type": null,
+                "optional": true
+              }
+            ]
+          },
+          "variant": null,
+          "desktop": null,
+          "mobile": null
+        },
+        "mobile": {
+          "type": "collapsed_nav",
+          "direction": null,
+          "gap": null,
+          "align": null,
+          "justify": null,
+          "width": null,
+          "max_width": null,
+          "margin": null,
+          "columns": null,
+          "slots": null,
+          "variant": null,
+          "desktop": null,
+          "mobile": null
+        }
+      },
+      "props": {
+        "logo": "",
+        "name": "Tareq Bin Taher",
+        "cta_label": "Contact Me",
+        "links": [
+          {
+            "label": "About",
+            "url": "#hero"
+          },
+          {
+            "label": "Skills",
+            "url": "#skills"
+          },
+          {
+            "label": "Research",
+            "url": "#case_studies"
+          },
+          {
+            "label": "Experience",
+            "url": "#experience"
+          },
+          {
+            "label": "Achievements",
+            "url": "#achievements"
+          },
+          {
+            "label": "Timeline",
+            "url": "#career_timeline"
+          },
+          {
+            "label": "Contact",
+            "url": "#contact_booking"
+          }
+        ]
+      },
+      "items": null,
+      "item_layout": null
+    },
+    {
+      "type": "hero",
+      "priority": "high",
+      "layout": {
+        "type": null,
+        "direction": null,
+        "gap": null,
+        "align": null,
+        "justify": null,
+        "width": null,
+        "max_width": null,
+        "margin": null,
+        "columns": null,
+        "slots": null,
+        "variant": null,
+        "desktop": {
+          "type": "grid",
+          "direction": null,
+          "gap": null,
+          "align": null,
+          "justify": null,
+          "width": null,
+          "max_width": null,
+          "margin": null,
+          "columns": null,
+          "slots": {
+            "left": [
+              "text",
+              "cta"
+            ],
+            "right": "image"
+          },
+          "variant": null,
+          "desktop": null,
+          "mobile": null
+        },
+        "mobile": {
+          "type": "flex_column",
+          "direction": null,
+          "gap": null,
+          "align": null,
+          "justify": null,
+          "width": null,
+          "max_width": null,
+          "margin": null,
+          "columns": null,
+          "slots": null,
+          "variant": null,
+          "desktop": null,
+          "mobile": null
+        }
+      },
+      "props": {
+        "name": "Tareq Bin Taher",
+        "hero_text": "Graduate Research Assistant in Computational Mechanics at NJIT, specializing in fracture mechanics of magnets and computational simulations. Graduating with Honors (CGPA 3.83/4.00, 6th out of 128) in Mechanical Engineering, I bridge advanced numerical methods with real-world engineering challenges \u2014 from aerodynamic modeling to material fracture analysis.",
+        "cta_label": "View My Research",
+        "cta_url": "#case_studies",
+        "image": "https://source.unsplash.com/featured/?mechanical,engineering,research"
+      },
+      "items": null,
+      "item_layout": null
+    },
+    {
+      "type": "stats_bar",
+      "priority": "low",
+      "layout": {
+        "type": "flex",
+        "direction": "row",
+        "gap": "2rem",
+        "align": null,
+        "justify": "center",
+        "width": null,
+        "max_width": null,
+        "margin": null,
+        "columns": null,
+        "slots": null,
+        "variant": "horizontal",
+        "desktop": null,
+        "mobile": null
+      },
+      "props": {
+        "title": null,
+        "background": "accent"
+      },
+      "items": [
+        {
+          "id": "sb1",
+          "value": "3.83/4.00",
+          "label": "Undergraduate CGPA (With Honors)",
+          "icon": null
+        },
+        {
+          "id": "sb2",
+          "value": "Top 6",
+          "label": "Merit Position out of 128 graduates",
+          "icon": null
+        },
+        {
+          "id": "sb3",
+          "value": "5+",
+          "label": "Years in Engineering & Research",
+          "icon": null
+        },
+        {
+          "id": "sb4",
+          "value": "4+",
+          "label": "Engineering Simulation Tools Mastered",
+          "icon": null
+        }
+      ],
+      "item_layout": {
+        "type": "column",
+        "layout": null,
+        "slots": {
+          "top": [
+            "icon"
+          ],
+          "middle": [
+            "value"
+          ],
+          "bottom": [
+            "label"
+          ]
+        },
+        "constraints": null
+      }
+    },
+    {
+      "type": "skills",
+      "priority": null,
+      "layout": {
+        "type": "flex",
+        "direction": null,
+        "gap": "1.5rem",
+        "align": null,
+        "justify": null,
+        "width": null,
+        "max_width": null,
+        "margin": null,
+        "columns": {
+          "desktop": 5,
+          "mobile": 2
+        },
+        "slots": null,
+        "variant": "grid",
+        "desktop": null,
+        "mobile": null
+      },
+      "props": null,
+      "items": [
+        {
+          "name": "ANSYS",
+          "icon": "https://source.unsplash.com/featured/?simulation,engineering"
+        },
+        {
+          "name": "Abaqus",
+          "icon": "https://source.unsplash.com/featured/?finite,element,analysis"
+        },
+        {
+          "name": "COMSOL",
+          "icon": "https://source.unsplash.com/featured/?multiphysics,simulation"
+        },
+        {
+          "name": "SolidWorks",
+          "icon": "https://cdn.worldvectorlogo.com/logos/solidworks.svg"
+        },
+        {
+          "name": "MATLAB",
+          "icon": "https://cdn.worldvectorlogo.com/logos/matlab.svg"
+        },
+        {
+          "name": "Python",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+        },
+        {
+          "name": "C",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg"
+        },
+        {
+          "name": "Fortran",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fortran/fortran-original.svg"
+        },
+        {
+          "name": "Tecplot 360",
+          "icon": "https://source.unsplash.com/featured/?data,visualization,engineering"
+        },
+        {
+          "name": "Computational Fluid Dynamics",
+          "icon": "https://source.unsplash.com/featured/?fluid,dynamics,aerodynamics"
+        }
+      ],
+      "item_layout": {
+        "type": "card",
+        "layout": {
+          "type": "flex_column",
+          "direction": null,
+          "gap": "0.5rem",
+          "align": "center",
+          "justify": null,
+          "width": null,
+          "max_width": null,
+          "margin": null,
+          "columns": null,
+          "slots": null,
+          "variant": null,
+          "desktop": null,
+          "mobile": null
+        },
+        "slots": [
+          {
+            "name": "icon",
+            "type": "image",
+            "optional": true
+          },
+          {
+            "name": "skill_name",
+            "type": "text",
+            "optional": false
+          }
+        ],
+        "constraints": null
+      }
+    },
+    {
+      "type": "experience",
+      "priority": "medium",
+      "layout": {
+        "type": "unordered_list",
+        "direction": "column",
+        "gap": null,
+        "align": null,
+        "justify": null,
+        "width": null,
+        "max_width": null,
+        "margin": null,
+        "columns": null,
+        "slots": null,
+        "variant": null,
+        "desktop": null,
+        "mobile": null
+      },
+      "props": null,
+      "items": [
+        {
+          "role": "Graduate Research Assistant",
+          "company": "Computational Mechanics & Physics Lab, Department of Mechanical and Industrial Engineering, New Jersey Institute of Technology (NJIT), Newark, NJ",
+          "date": "September 2025 \u2013 Present",
+          "description": "Conducting advanced research on the fracture mechanics of magnets within the Computational Mechanics & Physics Lab. Applying computational simulation methods to investigate failure behavior and material response in magnetic systems."
+        },
+        {
+          "role": "Industrial Attachment (Intern)",
+          "company": "Unilever Bangladesh Limited, Kalurghat Heavy Industrial Area, Chittagong, Bangladesh",
+          "date": "March 2023",
+          "description": "Collaborated in a cross-functional project to reduce excess give away (EGA) in sachet products, focusing on minimizing production wastage and associated financial losses through process analysis and optimization."
+        },
+        {
+          "role": "Vice President",
+          "company": "Greater Noakhali Student Forum, CUET",
+          "date": "2021 \u2013 2022",
+          "description": "Led student community initiatives and organizational activities for the Greater Noakhali Student Forum at CUET, developing leadership and communication skills while representing the student body."
+        }
+      ],
+      "item_layout": null
+    },
+    {
+      "type": "achievements",
+      "priority": "high",
+      "layout": {
+        "type": "grid",
+        "direction": null,
+        "gap": "1rem",
+        "align": null,
+        "justify": null,
+        "width": null,
+        "max_width": null,
+        "margin": null,
+        "columns": {
+          "desktop": 2,
+          "mobile": 1
+        },
+        "slots": null,
+        "variant": "badges",
+        "desktop": null,
+        "mobile": null
+      },
+      "props": {
+        "title": "Achievements & Honors",
+        "subtitle": "Academic distinctions and recognitions"
+      },
+      "items": [
+        {
+          "id": "a1",
+          "category": "award",
+          "title": "Bachelor of Science With Honors",
+          "issuer": "Chittagong University of Engineering and Technology (CUET)",
+          "date": "June 2023",
+          "credential_url": null,
+          "icon": null,
+          "description": "Graduated with Honors achieving a CGPA of 3.83/4.00 in Mechanical Engineering."
+        },
+        {
+          "id": "a2",
+          "category": "award",
+          "title": "6th Merit Position out of 128 Graduates",
+          "issuer": "Chittagong University of Engineering and Technology (CUET)",
+          "date": "June 2023",
+          "credential_url": null,
+          "icon": null,
+          "description": "Ranked 6th in the graduating cohort of 128 students in the Mechanical Engineering department."
+        },
+        {
+          "id": "a3",
+          "category": "award",
+          "title": "Semi-Finalist \u2013 Inter-Department Debating Competition",
+          "issuer": "CUET",
+          "date": "November 2018",
+          "credential_url": null,
+          "icon": null,
+          "description": "Reached the semi-finals of the Inter-Department Debating Competition at CUET, demonstrating strong analytical and public speaking skills."
+        },
+        {
+          "id": "a4",
+          "category": "award",
+          "title": "Judge \u2013 Inter-Department Debating Competition",
+          "issuer": "CUET",
+          "date": "2020 \u2013 2021",
+          "credential_url": null,
+          "icon": null,
+          "description": "Selected as a judge for the Inter-Department Debating Competition, recognizing academic maturity and communication expertise."
+        }
+      ],
+      "item_layout": {
+        "type": "row",
+        "layout": null,
+        "slots": {
+          "left": [
+            "icon"
+          ],
+          "center": [
+            "title",
+            "issuer",
+            "date"
+          ],
+          "right": [
+            "credential_url"
+          ]
+        },
+        "constraints": null
+      }
+    },
+    {
+      "type": "case_studies",
+      "priority": "high",
+      "layout": {
+        "type": "flex",
+        "direction": "column",
+        "gap": "3rem",
+        "align": null,
+        "justify": null,
+        "width": null,
+        "max_width": null,
+        "margin": null,
+        "columns": null,
+        "slots": null,
+        "variant": "featured",
+        "desktop": null,
+        "mobile": null
+      },
+      "props": {
+        "title": "Research Highlights",
+        "subtitle": "Key computational mechanics projects and investigations"
+      },
+      "items": [
+        {
+          "id": "cs1",
+          "title": "Fracture Mechanics of Magnets",
+          "client": null,
+          "industry": "Computational Mechanics / Materials Science",
+          "image": "https://source.unsplash.com/featured/?magnet,fracture,materials",
+          "tags": [
+            "Fracture Mechanics",
+            "Magnets",
+            "Computational Simulation",
+            "NJIT"
+          ],
+          "summary": "Ongoing graduate-level research investigating the fracture behavior of magnetic materials using advanced computational mechanics techniques at NJIT's Computational Mechanics & Physics Lab.",
+          "problem": "Understanding how magnets fracture under mechanical and magnetic loading is critical for engineering applications in motors, sensors, and structural components. The failure mechanisms in magnetic materials remain an active area of investigation.",
+          "approach": "Applying computational simulation frameworks \u2014 including finite element analysis tools such as Abaqus and COMSOL \u2014 to model stress distribution, crack initiation, and propagation in magnetic materials under various loading conditions.",
+          "result": "Ongoing research contributing to the fundamental understanding of magneto-mechanical coupling and fracture in permanent magnets, with implications for improving material durability in engineering applications.",
+          "metrics": [
+            {
+              "label": "Institution",
+              "value": "NJIT, Newark NJ"
+            },
+            {
+              "label": "Lab",
+              "value": "Computational Mechanics & Physics Lab"
+            },
+            {
+              "label": "Status",
+              "value": "Active (2025\u2013Present)"
+            }
+          ],
+          "link_url": null
+        },
+        {
+          "id": "cs2",
+          "title": "Aerodynamic Analysis of Ahmed Body Model with Underbody Diffuser",
+          "client": null,
+          "industry": "Computational Fluid Dynamics / Automotive Aerodynamics",
+          "image": "https://source.unsplash.com/featured/?aerodynamics,car,wind,tunnel",
+          "tags": [
+            "CFD",
+            "ANSYS Fluent",
+            "SolidWorks",
+            "Aerodynamics",
+            "Undergraduate Thesis"
+          ],
+          "summary": "Undergraduate thesis project conducting a comprehensive computational study on the aerodynamic behavior of the Ahmed body model, specifically analyzing the effects of an underbody diffuser on drag, lift, and flow characteristics.",
+          "problem": "Underbody diffusers significantly influence vehicle aerodynamics, affecting fuel efficiency and stability. However, computational characterization of their effect on standardized bluff body models (Ahmed body) requires detailed CFD analysis to quantify aerodynamic improvements.",
+          "approach": "Used ANSYS Fluent for computational fluid dynamics simulations and SolidWorks for 3D modeling of the Ahmed body geometry with varying diffuser configurations. Tecplot 360 was used for post-processing and visualization of pressure fields, velocity contours, and wake structures.",
+          "result": "Successfully characterized the aerodynamic impact of underbody diffuser geometry on the Ahmed body model, providing quantitative insights into drag reduction and downforce generation. Research supervised by Associate Professor Syed Masrur Ahmmad at CUET.",
+          "metrics": [
+            {
+              "label": "Simulation Tool",
+              "value": "ANSYS Fluent"
+            },
+            {
+              "label": "Modeling Tool",
+              "value": "SolidWorks"
+            },
+            {
+              "label": "Post-processing",
+              "value": "Tecplot 360"
+            },
+            {
+              "label": "Duration",
+              "value": "June 2022 \u2013 June 2023"
+            }
+          ],
+          "link_url": null
+        }
+      ],
+      "item_layout": {
+        "type": "card",
+        "layout": null,
+        "slots": {
+          "top": [
+            "image",
+            "tags"
+          ],
+          "middle": [
+            "title",
+            "client",
+            "summary"
+          ],
+          "bottom": [
+            "metrics",
+            "link_url"
+          ]
+        },
+        "constraints": null
+      }
+    },
+    {
+      "type": "career_timeline",
+      "priority": "medium",
+      "layout": {
+        "type": "unordered_list",
+        "direction": "column",
+        "gap": "0",
+        "align": null,
+        "justify": null,
+        "width": null,
+        "max_width": null,
+        "margin": null,
+        "columns": null,
+        "slots": null,
+        "variant": "vertical",
+        "desktop": null,
+        "mobile": null
+      },
+      "props": {
+        "title": "My Journey",
+        "subtitle": "From undergraduate excellence to cutting-edge graduate research"
+      },
+      "items": [
+        {
+          "id": "ct1",
+          "year": "2018",
+          "title": "Enrolled in B.Sc. Mechanical Engineering",
+          "subtitle": "Chittagong University of Engineering and Technology (CUET)",
+          "description": "Began undergraduate studies in Mechanical Engineering at CUET, one of Bangladesh's premier engineering institutions. Participated in debating competitions and student organizations from the first year.",
+          "icon": null,
+          "milestone_type": "education",
+          "color_override": null
+        },
+        {
+          "id": "ct2",
+          "year": "2019",
+          "title": "Joined Multiple Student Organizations",
+          "subtitle": "CUET Debating Society, Green for Peace, Andromeda Space and Robotic Research Organization",
+          "description": "Actively engaged in extracurricular activities including debating, environmental advocacy, and space & robotics research organizations, building leadership and interdisciplinary interests.",
+          "icon": null,
+          "milestone_type": "milestone",
+          "color_override": null
+        },
+        {
+          "id": "ct3",
+          "year": "2020",
+          "title": "Appointed Judge \u2013 Inter-Department Debating Competition",
+          "subtitle": "CUET",
+          "description": "Recognized for academic and communicative excellence by being appointed as a judge in the Inter-Department Debating Competition.",
+          "icon": null,
+          "milestone_type": "milestone",
+          "color_override": null
+        },
+        {
+          "id": "ct4",
+          "year": "2021",
+          "title": "Elected Vice President",
+          "subtitle": "Greater Noakhali Student Forum, CUET",
+          "description": "Took on a leadership role as Vice President of the Greater Noakhali Student Forum, organizing community events and representing student interests.",
+          "icon": null,
+          "milestone_type": "job",
+          "color_override": null
+        },
+        {
+          "id": "ct5",
+          "year": "2022",
+          "title": "Commenced Undergraduate Thesis Research",
+          "subtitle": "Computational Aerodynamics, CUET",
+          "description": "Began thesis research on the aerodynamic behavior of the Ahmed body model with underbody diffusers, using ANSYS Fluent and SolidWorks under the supervision of Associate Professor Syed Masrur Ahmmad.",
+          "icon": null,
+          "milestone_type": "education",
+          "color_override": null
+        },
+        {
+          "id": "ct6",
+          "year": "2023",
+          "title": "Industrial Attachment at Unilever Bangladesh",
+          "subtitle": "Kalurghat Heavy Industrial Area, Chittagong",
+          "description": "Gained hands-on industrial experience at Unilever Bangladesh, contributing to a project aimed at reducing excess give away (EGA) in sachet manufacturing.",
+          "icon": null,
+          "milestone_type": "job",
+          "color_override": null
+        },
+        {
+          "id": "ct7",
+          "year": "2023",
+          "title": "Graduated B.Sc. Mechanical Engineering With Honors",
+          "subtitle": "CUET \u2013 CGPA 3.83/4.00, 6th out of 128",
+          "description": "Successfully completed undergraduate studies with distinction, graduating with honors and achieving the 6th merit position in a cohort of 128 students.",
+          "icon": null,
+          "milestone_type": "education",
+          "color_override": null
+        },
+        {
+          "id": "ct8",
+          "year": "2025",
+          "title": "Graduate Research Assistant \u2013 NJIT",
+          "subtitle": "Computational Mechanics & Physics Lab, Department of Mechanical and Industrial Engineering",
+          "description": "Joined the Computational Mechanics & Physics Lab at New Jersey Institute of Technology to pursue graduate-level research on the fracture mechanics of magnets, marking a significant step into advanced computational materials research.",
+          "icon": null,
+          "milestone_type": "job",
+          "color_override": null
+        }
+      ],
+      "item_layout": {
+        "type": "row",
+        "layout": null,
+        "slots": {
+          "left": [
+            "year",
+            "icon"
+          ],
+          "right": [
+            "title",
+            "subtitle",
+            "description"
+          ]
+        },
+        "constraints": null
+      }
+    },
+    {
+      "type": "contact_booking",
+      "priority": "medium",
+      "layout": {
+        "type": "grid",
+        "direction": null,
+        "gap": "2rem",
+        "align": null,
+        "justify": null,
+        "width": null,
+        "max_width": null,
+        "margin": null,
+        "columns": {
+          "desktop": 2,
+          "mobile": 1
+        },
+        "slots": null,
+        "variant": "form_and_info",
+        "desktop": null,
+        "mobile": null
+      },
+      "props": {
+        "title": "Get In Touch",
+        "subtitle": "Interested in research collaboration, academic inquiries, or professional opportunities? I'd love to connect.",
+        "email": "tareqbintaher1@gmail.com",
+        "phone": null,
+        "location": "Newark, NJ, USA",
+        "calendar_url": null,
+        "social_links": [
+          {
+            "platform": "linkedin",
+            "url": "https://www.linkedin.com/in/tareq-bin-taher"
+          },
+          {
+            "platform": "email",
+            "url": "mailto:tb457@njit.edu"
+          }
+        ],
+        "form_fields": [
+          {
+            "name": "name",
+            "type": "text",
+            "label": "Your Name",
+            "required": true
+          },
+          {
+            "name": "email",
+            "type": "email",
+            "label": "Your Email",
+            "required": true
+          },
+          {
+            "name": "subject",
+            "type": "text",
+            "label": "Subject",
+            "required": false
+          },
+          {
+            "name": "message",
+            "type": "textarea",
+            "label": "Message",
+            "required": true
+          }
+        ],
+        "form_action": "mailto:tareqbintaher1@gmail.com"
+      },
+      "items": null,
+      "item_layout": null
+    },
+    {
+      "type": "footer",
+      "priority": null,
+      "layout": {
+        "type": "grid",
+        "direction": null,
+        "gap": null,
+        "align": null,
+        "justify": null,
+        "width": null,
+        "max_width": null,
+        "margin": null,
+        "columns": {
+          "desktop": 2,
+          "mobile": 1
+        },
+        "slots": {
+          "left": [
+            {
+              "name": "logo",
+              "type": "image",
+              "optional": false
+            },
+            {
+              "name": "name",
+              "type": "text",
+              "optional": false
+            }
+          ],
+          "right": [
+            {
+              "name": "links",
+              "type": "list",
+              "optional": false
+            }
+          ]
+        },
+        "variant": null,
+        "desktop": null,
+        "mobile": null
+      },
+      "props": {
+        "logo": "",
+        "name": "Tareq Bin Taher",
+        "links": [
+          {
+            "label": "LinkedIn",
+            "url": "https://www.linkedin.com/in/tareq-bin-taher"
+          },
+          {
+            "label": "Email (Personal)",
+            "url": "mailto:tareqbintaher1@gmail.com"
+          },
+          {
+            "label": "Email (NJIT)",
+            "url": "mailto:tb457@njit.edu"
+          }
+        ]
+      },
+      "items": null,
+      "item_layout": null
+    }
+  ]
+}

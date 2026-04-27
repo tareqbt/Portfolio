@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SectionHeader from './SectionHeader'
 import { getThemeColors } from '../theme'
 import { CONTENT_MAX_WIDTH } from '../theme'
@@ -13,7 +13,30 @@ export default function Gallery({ section, theme }) {
   })
   const title = section?.props?.title || 'Gallery'
   const subtitle = section?.props?.subtitle || null
-  const [activeImage, setActiveImage] = useState(null)
+  const [activeIndex, setActiveIndex] = useState(null)
+  const activeImage = activeIndex === null ? null : sortedItems[activeIndex]
+  const hasMultipleImages = sortedItems.length > 1
+
+  const closeImage = () => setActiveIndex(null)
+  const showRelativeImage = (direction) => {
+    setActiveIndex((current) => {
+      if (current === null || sortedItems.length === 0) return current
+      return (current + direction + sortedItems.length) % sortedItems.length
+    })
+  }
+
+  useEffect(() => {
+    if (activeIndex === null) return undefined
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'ArrowLeft') showRelativeImage(-1)
+      if (event.key === 'ArrowRight') showRelativeImage(1)
+      if (event.key === 'Escape') closeImage()
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [activeIndex, sortedItems.length])
 
   return (
     <section id="gallery" style={{ width: '100%', padding: '4rem 1.5rem', backgroundColor: surface }}>
@@ -26,7 +49,7 @@ export default function Gallery({ section, theme }) {
               <button
                 key={item.id || idx}
                 type="button"
-                onClick={() => setActiveImage(item)}
+                onClick={() => setActiveIndex(idx)}
                 style={{
                   padding: 0,
                   border: `1px solid ${divider}`,
@@ -79,7 +102,7 @@ export default function Gallery({ section, theme }) {
               </div>
             </div>
             <a
-              href="#case_studies"
+              href="#/research"
               style={{
                 display: 'inline-block',
                 textDecoration: 'none',
@@ -102,7 +125,7 @@ export default function Gallery({ section, theme }) {
           role="dialog"
           aria-modal="true"
           aria-label={activeImage.title || 'Gallery image'}
-          onClick={() => setActiveImage(null)}
+          onClick={closeImage}
           style={{
             position: 'fixed',
             inset: 0,
@@ -128,10 +151,17 @@ export default function Gallery({ section, theme }) {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
-              <div style={{ color: primary, fontWeight: 700 }}>{activeImage.title || 'Photo'}</div>
+              <div>
+                <div style={{ color: primary, fontWeight: 700 }}>{activeImage.title || 'Photo'}</div>
+                {hasMultipleImages && (
+                  <div style={{ color: secondary, opacity: 0.62, fontSize: '0.78rem', marginTop: '0.15rem' }}>
+                    {activeIndex + 1} of {sortedItems.length}
+                  </div>
+                )}
+              </div>
               <button
                 type="button"
-                onClick={() => setActiveImage(null)}
+                onClick={closeImage}
                 aria-label="Close gallery image"
                 style={{
                   width: 36,
@@ -148,11 +178,63 @@ export default function Gallery({ section, theme }) {
                 x
               </button>
             </div>
-            <img
-              src={activeImage.image}
-              alt={activeImage.title || 'Gallery image'}
-              style={{ width: '100%', height: '100%', minHeight: 0, objectFit: 'contain', display: 'block' }}
-            />
+            <div style={{ position: 'relative', flex: 1, minHeight: 0 }}>
+              {hasMultipleImages && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => showRelativeImage(-1)}
+                    aria-label="Previous gallery image"
+                    style={{
+                      position: 'absolute',
+                      left: 12,
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      width: 42,
+                      height: 42,
+                      borderRadius: 999,
+                      border: 'none',
+                      backgroundColor: 'rgba(17,24,39,0.78)',
+                      color: '#fff',
+                      cursor: 'pointer',
+                      fontSize: '1.35rem',
+                      zIndex: 1,
+                      lineHeight: 1,
+                    }}
+                  >
+                    {'<'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => showRelativeImage(1)}
+                    aria-label="Next gallery image"
+                    style={{
+                      position: 'absolute',
+                      right: 12,
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      width: 42,
+                      height: 42,
+                      borderRadius: 999,
+                      border: 'none',
+                      backgroundColor: 'rgba(17,24,39,0.78)',
+                      color: '#fff',
+                      cursor: 'pointer',
+                      fontSize: '1.35rem',
+                      zIndex: 1,
+                      lineHeight: 1,
+                    }}
+                  >
+                    {'>'}
+                  </button>
+                </>
+              )}
+              <img
+                src={activeImage.image}
+                alt={activeImage.title || 'Gallery image'}
+                style={{ width: '100%', height: '100%', minHeight: 0, objectFit: 'contain', display: 'block' }}
+              />
+            </div>
           </div>
         </div>
       )}

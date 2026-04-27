@@ -21,9 +21,9 @@ export default function Hero({ section, theme }) {
 
   const containerStyle = {
     display: isGrid ? 'grid' : 'flex',
-    gridTemplateColumns: isGrid ? 'minmax(0, 1.55fr) minmax(260px, 0.45fr)' : undefined,
+    gridTemplateColumns: isGrid ? 'minmax(0, 1.45fr) minmax(280px, 0.55fr)' : undefined,
     flexDirection: isGrid ? undefined : 'column',
-    gap: isMobile ? '2.5rem' : '5rem',
+    gap: isMobile ? '3rem' : '5.5rem',
     alignItems: 'center',
     justifyContent: 'space-between',
   }
@@ -39,7 +39,7 @@ export default function Hero({ section, theme }) {
                 style={{
                   color: primary,
                   fontFamily: 'Georgia, Times New Roman, serif',
-                  fontSize: isMobile ? '2.65rem' : '4.6rem',
+                  fontSize: isMobile ? '3rem' : '5.25rem',
                   fontWeight: 700,
                   lineHeight: 1,
                   margin: 0,
@@ -59,32 +59,26 @@ export default function Hero({ section, theme }) {
                 {p.affiliation}
               </p>
             )}
-            {p.research_focus && (
-              <p style={{ margin: '1.4rem 0 0 0', color: primary, fontSize: isMobile ? '1.18rem' : '1.35rem', fontWeight: 700, lineHeight: 1.45 }}>
-                {p.research_focus}
+            {(p.lab_name || p.institution) && (
+              <p style={{ margin: '0.3rem 0 0 0', color: secondary, opacity: 0.78, fontSize: '0.98rem', lineHeight: 1.55 }}>
+                {p.lab_name && p.lab_url ? (
+                  <a href={p.lab_url} target="_blank" rel="noreferrer" style={{ color: primary, fontWeight: 700, textDecoration: 'none' }}>
+                    {p.lab_name}
+                  </a>
+                ) : (
+                  p.lab_name
+                )}
+                {p.lab_name && p.institution ? ', ' : ''}
+                {p.institution}
+              </p>
+            )}
+            {p.pi && (
+              <p style={{ margin: '0.3rem 0 0 0', color: secondary, opacity: 0.78, fontSize: '0.98rem', lineHeight: 1.55 }}>
+                Principal Investigator (PI): <span style={{ color: primary, fontWeight: 700 }}>{p.pi}</span>
               </p>
             )}
             {p.hero_text && (
-              <p style={{ margin: '0.8rem 0 0 0', color: secondary, opacity: 0.82, lineHeight: 1.75, fontSize: '1.02rem', maxWidth: 660 }}>{p.hero_text}</p>
-            )}
-            {Array.isArray(p.research_areas) && p.research_areas.length > 0 && (
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem', marginTop: '1.15rem', justifyContent: isMobile ? 'center' : 'flex-start' }}>
-                {p.research_areas.map((area) => (
-                  <span
-                    key={area}
-                    style={{
-                      color: secondary,
-                      opacity: 0.8,
-                      paddingRight: '0.8rem',
-                      fontSize: '0.86rem',
-                      fontWeight: 700,
-                      borderRight: `1px solid ${divider}`,
-                    }}
-                  >
-                    {area}
-                  </span>
-                ))}
-              </div>
+              <p style={{ margin: '1.55rem 0 0 0', color: secondary, opacity: 0.86, lineHeight: 1.8, fontSize: isMobile ? '1.03rem' : '1.12rem', maxWidth: 780 }}>{p.hero_text}</p>
             )}
           </div>
         )
@@ -147,7 +141,7 @@ export default function Hero({ section, theme }) {
         ) : null
       case 'image': {
         if (!p.image) return null
-        const imageMaxWidth = isMobile ? '260px' : '300px'
+        const imageMaxWidth = isMobile ? '280px' : '360px'
         const imageAspectRatio = '1 / 1'
         return (
           <div
@@ -209,7 +203,7 @@ export default function Hero({ section, theme }) {
   }
 
   return (
-    <section id="hero" style={{ width: '100%', padding: isMobile ? '3.25rem 1.5rem' : '6rem 1.5rem', backgroundColor: background, borderBottom: `1px solid ${divider}` }}>
+    <section id="hero" style={{ width: '100%', padding: isMobile ? '4.5rem 1.5rem 5rem' : '7.5rem 1.5rem 7rem', backgroundColor: background, borderBottom: `1px solid ${divider}` }}>
       <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: '0 auto' }}>
         <div style={containerStyle}>
           {/* Left */}

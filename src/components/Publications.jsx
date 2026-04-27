@@ -11,8 +11,23 @@ export default function Publications({ section, theme }) {
     <section id="publications" style={{ width: '100%', padding: '4rem 1.5rem', backgroundColor: surface }}>
       <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: '0 auto' }}>
         <SectionHeader label="PUBLICATIONS" heading={title} description={null} primary={primary} accent={accent} />
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {items.map((item, idx) => (
+        {items.length === 0 ? (
+          <div
+            style={{
+              border: `1px solid ${divider}`,
+              borderRadius: 8,
+              backgroundColor: background,
+              padding: '1.5rem',
+            }}
+          >
+            <h3 style={{ color: primary, margin: 0, fontSize: '1.08rem', lineHeight: 1.35 }}>Publications</h3>
+            <p style={{ color: secondary, opacity: 0.82, margin: '0.55rem 0 0', fontSize: '0.95rem', lineHeight: 1.65 }}>
+              Manuscripts and conference contributions will be added here.
+            </p>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {items.map((item, idx) => (
             <article
               key={item.id || idx}
               style={{
@@ -53,8 +68,9 @@ export default function Publications({ section, theme }) {
                 </a>
               )}
             </article>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )

@@ -1,65 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import SectionHeader from './SectionHeader'
-import { getThemeColors } from '../theme'
-import { CONTENT_MAX_WIDTH } from '../theme'
+import { getThemeColors, CONTENT_MAX_WIDTH } from '../theme'
 
-function Tags({ tags, accent }) {
-  if (!tags || tags.length === 0) return null
-  return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
-      {tags.map((tag, i) => (
-        <span key={i} style={{ fontSize: '0.72rem', fontWeight: 600, backgroundColor: `${accent}12`, color: accent, borderRadius: 4, padding: '2px 8px' }}>{tag}</span>
-      ))}
-    </div>
-  )
-}
-
-function Metrics({ metrics, primary, secondary }) {
+function Metrics({ metrics, primary, secondary, divider, surface }) {
   if (!metrics || metrics.length === 0) return null
+
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', marginTop: '0.75rem' }}>
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+        gap: '0.7rem',
+        marginTop: '0.85rem',
+        paddingTop: '0.85rem',
+        borderTop: `1px solid ${divider}`,
+      }}
+    >
       {metrics.map((m, i) => (
-        <div key={i} style={{ display: 'flex', flexDirection: 'column' }}>
-          <span style={{ fontSize: '1.25rem', fontWeight: 700, color: primary, lineHeight: 1 }}>{m.value}</span>
-          <span style={{ fontSize: '0.72rem', color: secondary, opacity: 0.75, marginTop: 2 }}>{m.label}</span>
+        <div key={i} style={{ backgroundColor: surface, borderRadius: 6, padding: '0.7rem 0.75rem', minWidth: 0 }}>
+          <span style={{ display: 'block', fontSize: '0.72rem', color: secondary, opacity: 0.72, lineHeight: 1.25 }}>
+            {m.label}
+          </span>
+          <span style={{ display: 'block', fontSize: '0.9rem', fontWeight: 800, color: primary, lineHeight: 1.35, marginTop: '0.18rem' }}>
+            {m.value}
+          </span>
         </div>
       ))}
     </div>
-  )
-}
-
-function ExpandableImage({ item, primary, surface, height = '100%', minHeight, onOpenImage }) {
-  if (!item.image) {
-    return (
-      <div style={{ width: '100%', height, minHeight, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', color: `${primary}50` }}>
-        ðŸ“‹
-      </div>
-    )
-  }
-
-  return (
-    <button
-      type="button"
-      onClick={() => onOpenImage(item)}
-      aria-label={`Open ${item.title} poster`}
-      title="Open larger image"
-      style={{
-        width: '100%',
-        height,
-        minHeight,
-        padding: 0,
-        border: 'none',
-        backgroundColor: surface,
-        cursor: 'zoom-in',
-        overflow: 'hidden',
-      }}
-    >
-      <img
-        src={item.image}
-        alt={item.title}
-        style={{ width: '100%', height: '100%', objectFit: item.image_fit || 'cover', display: 'block' }}
-      />
-    </button>
   )
 }
 
@@ -113,7 +80,7 @@ function ImageLightbox({ image, primary, background, onClose, onPrevious, onNext
       >
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
           <div>
-            <div style={{ color: primary, fontWeight: 700, fontSize: '0.95rem' }}>{image.title}</div>
+            <div style={{ color: primary, fontWeight: 800, fontSize: '0.95rem' }}>{image.title}</div>
             {hasMultiple && (
               <div style={{ color: primary, opacity: 0.62, fontSize: '0.78rem', marginTop: '0.15rem' }}>
                 {image.index + 1} of {image.images.length}
@@ -158,11 +125,11 @@ function ImageLightbox({ image, primary, background, onClose, onPrevious, onNext
                   backgroundColor: 'rgba(17,24,39,0.82)',
                   color: '#fff',
                   cursor: 'pointer',
-                  fontSize: '1.5rem',
+                  fontSize: '1.4rem',
                   zIndex: 1,
                 }}
               >
-                ‹
+                {'<'}
               </button>
               <button
                 type="button"
@@ -180,11 +147,11 @@ function ImageLightbox({ image, primary, background, onClose, onPrevious, onNext
                   backgroundColor: 'rgba(17,24,39,0.82)',
                   color: '#fff',
                   cursor: 'pointer',
-                  fontSize: '1.5rem',
+                  fontSize: '1.4rem',
                   zIndex: 1,
                 }}
               >
-                ›
+                {'>'}
               </button>
             </>
           )}
@@ -205,8 +172,6 @@ function ImageLightbox({ image, primary, background, onClose, onPrevious, onNext
     </div>
   )
 }
-
-/* ── featured variant ──────────────────────────── */
 
 function PresentationPhoto({ item, primary, secondary, divider, background, onOpenImage }) {
   const photos = item.presentation_images || (
@@ -254,8 +219,8 @@ function PresentationPhoto({ item, primary, secondary, divider, background, onOp
               }}
             />
             <span>
-              <span style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700 }}>{title}</span>
-              <span style={{ display: 'block', fontSize: '0.72rem', color: secondary, opacity: 0.75 }}>Click to enlarge</span>
+              <span style={{ display: 'block', fontSize: '0.8rem', fontWeight: 800 }}>{title}</span>
+              <span style={{ display: 'block', fontSize: '0.72rem', color: secondary, opacity: 0.72 }}>Click to enlarge</span>
             </span>
           </button>
         )
@@ -266,58 +231,98 @@ function PresentationPhoto({ item, primary, secondary, divider, background, onOp
 
 function CaseStudiesFeatured({ items, primary, secondary, accent, divider, surface, background, onOpenImage }) {
   const [openItem, setOpenItem] = useState(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 780)
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
       {items.map((item, idx) => {
         const id = item.id || String(idx)
         const isOpen = openItem === id
         const hasAccordion = item.problem || item.approach || item.result
+        const hasImage = Boolean(item.image)
+        const metadata = [item.client, item.industry].filter(Boolean).join(' | ')
 
         return (
-          <div key={id} style={{ border: `2px solid ${divider}`, backgroundColor: background, borderRadius: 16, overflow: 'hidden', display: 'grid', gridTemplateColumns: '40% 60%' }}>
-            <div style={{ backgroundColor: surface, minHeight: 280, overflow: 'hidden' }}>
-              {item.image
-                ? <img src={item.image} alt={item.title} onClick={() => onOpenImage(item)} style={{ width: '100%', height: '100%', objectFit: item.image_fit || 'cover', display: 'block', cursor: 'zoom-in' }} />
-                : <div style={{ width: '100%', height: '100%', minHeight: 280, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', color: `${primary}50` }}>📋</div>
-              }
-            </div>
+          <div
+            key={id}
+            style={{
+              border: `1px solid ${divider}`,
+              backgroundColor: background,
+              borderRadius: 8,
+              overflow: 'hidden',
+              display: 'grid',
+              gridTemplateColumns: hasImage && !isMobile ? 'minmax(280px, 420px) minmax(0, 1fr)' : '1fr',
+            }}
+          >
+            {hasImage && (
+              <div style={{ backgroundColor: surface, minHeight: isMobile ? 220 : 300, overflow: 'hidden' }}>
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  onClick={() => onOpenImage(item)}
+                  style={{ width: '100%', height: '100%', objectFit: item.image_fit || 'cover', display: 'block', cursor: 'zoom-in' }}
+                />
+              </div>
+            )}
 
-            <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <Tags tags={item.tags} accent={accent} />
-              <h3 style={{ color: primary, margin: 0, fontSize: '1.25rem', fontWeight: 700 }}>{item.title}</h3>
-              {item.client && <div style={{ fontSize: '0.75rem', fontWeight: 600, color: secondary, opacity: 0.75 }}>{item.client}</div>}
-              {item.summary && <p style={{ color: secondary, opacity: 0.85, margin: 0, fontStyle: 'italic', fontSize: '0.875rem', lineHeight: 1.6 }}>{item.summary}</p>}
+            <div style={{ padding: isMobile ? '1.25rem' : '1.55rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <h3 style={{ color: primary, margin: 0, fontSize: '1.12rem', fontWeight: 800, lineHeight: 1.35 }}>{item.title}</h3>
+              {metadata && (
+                <div style={{ fontSize: '0.78rem', fontWeight: 600, color: secondary, opacity: 0.72, lineHeight: 1.45 }}>
+                  {metadata}
+                </div>
+              )}
+              {item.summary && (
+                <p style={{ color: secondary, opacity: 0.84, margin: 0, fontSize: '0.92rem', lineHeight: 1.65 }}>
+                  {item.summary}
+                </p>
+              )}
+
               <PresentationPhoto item={item} primary={primary} secondary={secondary} divider={divider} background={background} onOpenImage={onOpenImage} />
 
               {hasAccordion && (
                 <div>
                   <button
+                    type="button"
                     onClick={() => setOpenItem(isOpen ? null : id)}
                     style={{
-                      display: 'flex', alignItems: 'center', gap: '0.5rem',
-                      background: 'none', border: `1px solid ${divider}`, borderRadius: 6,
-                      padding: '0.375rem 0.75rem', cursor: 'pointer', color: primary,
-                      fontSize: '0.8rem', fontWeight: 600,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      background: 'none',
+                      border: `1px solid ${divider}`,
+                      borderRadius: 6,
+                      padding: '0.4rem 0.75rem',
+                      cursor: 'pointer',
+                      color: primary,
+                      fontSize: '0.8rem',
+                      fontWeight: 800,
                     }}
                   >
-                    <span>Problem / Approach / Result</span>
-                    <span style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>▾</span>
+                    <span>Research Details</span>
+                    <span style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>v</span>
                   </button>
                   {isOpen && (
-                    <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                      {item.problem && <div><div style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: accent, marginBottom: '0.2rem' }}>Problem</div><p style={{ color: secondary, opacity: 0.85, margin: 0, fontSize: '0.875rem', lineHeight: 1.6 }}>{item.problem}</p></div>}
-                      {item.approach && <div><div style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: accent, marginBottom: '0.2rem' }}>Approach</div><p style={{ color: secondary, opacity: 0.85, margin: 0, fontSize: '0.875rem', lineHeight: 1.6 }}>{item.approach}</p></div>}
-                      {item.result && <div><div style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: accent, marginBottom: '0.2rem' }}>Result</div><p style={{ color: secondary, opacity: 0.85, margin: 0, fontSize: '0.875rem', lineHeight: 1.6 }}>{item.result}</p></div>}
+                    <div style={{ marginTop: '0.8rem', display: 'grid', gap: '0.75rem' }}>
+                      {item.problem && <DetailBlock label="Problem" text={item.problem} accent={accent} secondary={secondary} />}
+                      {item.approach && <DetailBlock label="Approach" text={item.approach} accent={accent} secondary={secondary} />}
+                      {item.result && <DetailBlock label="Result" text={item.result} accent={accent} secondary={secondary} />}
                     </div>
                   )}
                 </div>
               )}
 
-              <Metrics metrics={item.metrics} primary={primary} secondary={secondary} />
+              <Metrics metrics={item.metrics} primary={primary} secondary={secondary} divider={divider} surface={surface} />
               {item.link_url && (
-                <a href={item.link_url} target="_blank" rel="noreferrer" style={{ fontSize: '0.875rem', fontWeight: 600, color: primary, textDecoration: 'none', marginTop: 'auto', paddingTop: '0.5rem' }}>
-                  View Case Study →
+                <a href={item.link_url} target="_blank" rel="noreferrer" style={{ fontSize: '0.875rem', fontWeight: 700, color: primary, textDecoration: 'none', marginTop: 'auto', paddingTop: '0.5rem' }}>
+                  View Case Study &gt;
                 </a>
               )}
             </div>
@@ -328,73 +333,79 @@ function CaseStudiesFeatured({ items, primary, secondary, accent, divider, surfa
   )
 }
 
-/* ── grid variant ──────────────────────────────── */
-
-function CaseStudiesGrid({ items, primary, secondary, accent, divider, surface, background, onOpenImage }) {
-  const [hovered, setHovered] = useState(null)
+function DetailBlock({ label, text, accent, secondary }) {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
-      {items.map((item, idx) => (
-        <div
-          key={item.id || idx}
-          style={{
-            border: `2px solid ${hovered === idx ? accent : divider}`,
-            backgroundColor: background,
-            borderRadius: 12, overflow: 'hidden', display: 'flex', flexDirection: 'column',
-            transform: hovered === idx ? 'translateY(-4px)' : 'translateY(0)',
-            boxShadow: hovered === idx ? `0 8px 24px ${accent}30` : 'none',
-            transition: 'all 0.3s ease',
-          }}
-          onMouseEnter={() => setHovered(idx)}
-          onMouseLeave={() => setHovered(null)}
-        >
-          {item.image
-            ? <img src={item.image} alt={item.title} onClick={() => onOpenImage(item)} style={{ width: '100%', height: 180, objectFit: item.image_fit || 'cover', display: 'block', cursor: 'zoom-in' }} />
-            : <div style={{ width: '100%', height: 180, backgroundColor: `${primary}10`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', color: `${primary}40` }}>📋</div>
-          }
-          <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1 }}>
-            <Tags tags={item.tags} accent={accent} />
-            <h3 style={{ color: primary, margin: 0, fontSize: '1rem', fontWeight: 700 }}>{item.title}</h3>
-            {item.summary && <p style={{ color: secondary, opacity: 0.8, margin: 0, fontSize: '0.875rem' }}>{item.summary}</p>}
-            <Metrics metrics={item.metrics} primary={primary} secondary={secondary} />
-            {item.link_url && <a href={item.link_url} target="_blank" rel="noreferrer" style={{ fontSize: '0.75rem', fontWeight: 600, color: accent, textDecoration: 'none', marginTop: 'auto' }}>View →</a>}
-          </div>
-        </div>
-      ))}
+    <div>
+      <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: accent, marginBottom: '0.2rem' }}>{label}</div>
+      <p style={{ color: secondary, opacity: 0.86, margin: 0, fontSize: '0.88rem', lineHeight: 1.6 }}>{text}</p>
     </div>
   )
 }
 
-/* ── minimal variant ───────────────────────────── */
+function CaseStudiesGrid({ items, primary, secondary, accent, divider, surface, background, onOpenImage }) {
+  const [hovered, setHovered] = useState(null)
+
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '1.25rem' }}>
+      {items.map((item, idx) => {
+        const metadata = [item.client, item.industry].filter(Boolean).join(' | ')
+
+        return (
+          <div
+            key={item.id || idx}
+            style={{
+              border: `1px solid ${hovered === idx ? accent : divider}`,
+              backgroundColor: background,
+              borderRadius: 8,
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+              transform: hovered === idx ? 'translateY(-2px)' : 'translateY(0)',
+              transition: 'all 0.25s ease',
+            }}
+            onMouseEnter={() => setHovered(idx)}
+            onMouseLeave={() => setHovered(null)}
+          >
+            {item.image && (
+              <img
+                src={item.image}
+                alt={item.title}
+                onClick={() => onOpenImage(item)}
+                style={{ width: '100%', height: 180, objectFit: item.image_fit || 'cover', display: 'block', cursor: 'zoom-in' }}
+              />
+            )}
+            <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.6rem', flex: 1 }}>
+              <h3 style={{ color: primary, margin: 0, fontSize: '1.05rem', fontWeight: 800, lineHeight: 1.35 }}>{item.title}</h3>
+              {metadata && <div style={{ fontSize: '0.76rem', color: secondary, opacity: 0.72 }}>{metadata}</div>}
+              {item.summary && <p style={{ color: secondary, opacity: 0.84, margin: 0, fontSize: '0.9rem', lineHeight: 1.6 }}>{item.summary}</p>}
+              <Metrics metrics={item.metrics} primary={primary} secondary={secondary} divider={divider} surface={surface} />
+              {item.link_url && <a href={item.link_url} target="_blank" rel="noreferrer" style={{ fontSize: '0.8rem', fontWeight: 700, color: accent, textDecoration: 'none', marginTop: 'auto' }}>View &gt;</a>}
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
 
 function CaseStudiesMinimal({ items, primary, secondary, accent }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       {items.map((item, idx) => (
-        <div key={item.id || idx} style={{ borderLeft: `4px solid ${accent}`, paddingLeft: '1.5rem', paddingTop: '0.25rem', paddingBottom: '0.25rem', marginBottom: idx < items.length - 1 ? '2.5rem' : 0 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '0.4rem' }}>
-            <h3 style={{ color: primary, margin: 0, fontSize: '1.125rem', fontWeight: 700 }}>{item.title}</h3>
-            <Tags tags={item.tags} accent={accent} />
-          </div>
-          {item.summary && <p style={{ color: secondary, opacity: 0.8, margin: '0 0 0.75rem 0', fontStyle: 'italic', fontSize: '0.875rem' }}>{item.summary}</p>}
-          {item.problem && <div style={{ marginBottom: '0.5rem' }}><span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: primary }}>Problem </span><span style={{ color: secondary, opacity: 0.85, fontSize: '0.875rem' }}>{item.problem}</span></div>}
-          {item.approach && <div style={{ marginBottom: '0.5rem' }}><span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: primary }}>Approach </span><span style={{ color: secondary, opacity: 0.85, fontSize: '0.875rem' }}>{item.approach}</span></div>}
-          {item.result && <div style={{ marginBottom: '0.5rem' }}><span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: primary }}>Result </span><span style={{ color: secondary, opacity: 0.85, fontSize: '0.875rem' }}>{item.result}</span></div>}
-          <Metrics metrics={item.metrics} primary={primary} secondary={secondary} />
-          {item.link_url && <a href={item.link_url} target="_blank" rel="noreferrer" style={{ fontSize: '0.75rem', fontWeight: 600, color: accent, textDecoration: 'none', display: 'inline-block', marginTop: '0.5rem' }}>View Case Study →</a>}
+        <div key={item.id || idx} style={{ borderLeft: `3px solid ${accent}`, paddingLeft: '1.25rem', paddingTop: '0.25rem', paddingBottom: '0.25rem', marginBottom: idx < items.length - 1 ? '2rem' : 0 }}>
+          <h3 style={{ color: primary, margin: 0, fontSize: '1.05rem', fontWeight: 800, lineHeight: 1.35 }}>{item.title}</h3>
+          {item.summary && <p style={{ color: secondary, opacity: 0.84, margin: '0.55rem 0 0', fontSize: '0.9rem', lineHeight: 1.6 }}>{item.summary}</p>}
         </div>
       ))}
     </div>
   )
 }
 
-/* ── main export ───────────────────────────────── */
-
 export default function CaseStudies({ section, theme }) {
   const { primary, secondary, accent, divider, surface, background } = getThemeColors(theme)
   const items = section?.items || []
   const variant = section?.layout?.variant || 'featured'
-  const title = section?.props?.title || 'Case Studies'
+  const title = section?.props?.title || 'Research Highlights'
   const [expandedImage, setExpandedImage] = useState(null)
 
   const openImageGroup = (item, clickedSrc = item.image) => {
@@ -408,8 +419,10 @@ export default function CaseStudies({ section, theme }) {
         ? [{ src: item.presentation_image, title: item.presentation_image_title || item.title }]
         : []),
     ]
-    const index = Math.max(0, images.findIndex((image) => image.src === clickedSrc))
 
+    if (images.length === 0) return
+
+    const index = Math.max(0, images.findIndex((image) => image.src === clickedSrc))
     setExpandedImage({ ...images[index], images, index })
   }
 
@@ -424,16 +437,16 @@ export default function CaseStudies({ section, theme }) {
   return (
     <section id="case_studies" style={{ width: '100%', padding: '4rem 1.5rem' }}>
       <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: '0 auto' }}>
-      <SectionHeader label="CASE STUDIES" heading={title} description={section?.description} primary={primary} accent={accent} />
-      {items.length === 0 ? (
-        <p style={{ color: secondary, opacity: 0.6 }}>No case studies listed.</p>
-      ) : variant === 'grid' ? (
-        <CaseStudiesGrid items={items} primary={primary} secondary={secondary} accent={accent} divider={divider} surface={surface} background={background} onOpenImage={openImageGroup} />
-      ) : variant === 'minimal' ? (
-        <CaseStudiesMinimal items={items} primary={primary} secondary={secondary} accent={accent} />
-      ) : (
-        <CaseStudiesFeatured items={items} primary={primary} secondary={secondary} accent={accent} divider={divider} surface={surface} background={background} onOpenImage={openImageGroup} />
-      )}
+        <SectionHeader label="RESEARCH" heading={title} description={section?.description} primary={primary} accent={accent} />
+        {items.length === 0 ? (
+          <p style={{ color: secondary, opacity: 0.6 }}>No research highlights listed.</p>
+        ) : variant === 'grid' ? (
+          <CaseStudiesGrid items={items} primary={primary} secondary={secondary} accent={accent} divider={divider} surface={surface} background={background} onOpenImage={openImageGroup} />
+        ) : variant === 'minimal' ? (
+          <CaseStudiesMinimal items={items} primary={primary} secondary={secondary} accent={accent} />
+        ) : (
+          <CaseStudiesFeatured items={items} primary={primary} secondary={secondary} accent={accent} divider={divider} surface={surface} background={background} onOpenImage={openImageGroup} />
+        )}
       </div>
       <ImageLightbox
         image={expandedImage}

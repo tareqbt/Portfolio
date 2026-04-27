@@ -96,14 +96,6 @@ export default function Footer({ section, theme }) {
           <p style={{ margin: 0, fontSize: '0.875rem', color: secondary }}>
             © {new Date().getFullYear()} All rights reserved.
           </p>
-          {props.contact_email && (
-            <p id="contact_booking" style={{ margin: '0.35rem 0 0', fontSize: '0.875rem', color: secondary }}>
-              Contact:{' '}
-              <a href={`mailto:${props.contact_email}`} style={{ color: primary, fontWeight: 700, textDecoration: 'none' }}>
-                {props.contact_email}
-              </a>
-            </p>
-          )}
         </div>
 
         {/* Right */}

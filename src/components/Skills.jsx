@@ -61,7 +61,20 @@ export default function Skills({ section, theme }) {
 
   const renderIcon = (skill) => {
     if (skill.icon) {
-      return <img src={skill.icon} alt="" style={{ width: 34, height: 34, objectFit: 'contain', flexShrink: 0 }} />
+      return (
+        <img
+          src={skill.icon}
+          alt=""
+          style={{
+            width: 'auto',
+            maxWidth: 86,
+            height: 34,
+            maxHeight: 40,
+            objectFit: 'contain',
+            flexShrink: 0,
+          }}
+        />
+      )
     }
 
     const initials = (skill.name || '')

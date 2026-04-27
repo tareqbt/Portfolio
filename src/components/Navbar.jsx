@@ -70,6 +70,8 @@ export default function Navbar({ section, theme }) {
               <a
                 key={idx}
                 href={link.url || '#'}
+                target={link.target}
+                rel={link.rel || (link.target === '_blank' ? 'noopener noreferrer' : undefined)}
                 onClick={() => setIsOpen(false)}
                 style={{
                   fontSize: '0.875rem',

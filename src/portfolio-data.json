@@ -92,43 +92,29 @@
       "props": {
         "logo": "",
         "name": "Tareq Bin Taher",
-        "cta_label": "Contact Me",
+        "cta_label": null,
         "links": [
           {
             "label": "Home",
-            "url": "#hero"
+            "url": "#/"
           },
           {
-            "label": "Research Highlights",
-            "url": "#case_studies"
-          },
-          {
-            "label": "Publications & Presentations",
-            "url": "#publications"
+            "label": "Timeline",
+            "url": "#/timeline"
           },
           {
             "label": "Experience",
-            "url": "#experience"
+            "url": "#/experience"
           },
           {
-            "label": "Education / Timeline",
-            "url": "#career_timeline"
-          },
-          {
-            "label": "Skills",
-            "url": "#skills"
-          },
-          {
-            "label": "Gallery",
-            "url": "#gallery"
+            "label": "Publications",
+            "url": "#/publications"
           },
           {
             "label": "CV",
-            "url": "#cv"
-          },
-          {
-            "label": "Contact",
-            "url": "#contact_booking"
+            "url": "/CV_Tareq_Bin_Taher.pdf",
+            "target": "_blank",
+            "rel": "noopener noreferrer"
           }
         ]
       },
@@ -190,21 +176,21 @@
       "props": {
         "name": "Tareq Bin Taher",
         "role": "Graduate Research Assistant",
-        "affiliation": "Computational Mechanics & Physics Lab, New Jersey Institute of Technology",
-        "research_focus": "Computational mechanics of magnet fracture, magnetoelasticity, and multiphysics simulation",
-        "research_areas": [
-          "Magnet fracture",
-          "Magnetoelasticity",
-          "Multiphysics simulation"
-        ],
+        "lab_name": "Computational Mechanics & Physics Lab",
+        "lab_url": "https://xingliu-solids.com/",
+        "institution": "New Jersey Institute of Technology",
+        "pi": "Prof. Xing Liu",
+        "affiliation": null,
+        "research_focus": null,
+        "research_areas": [],
         "current_project": "Fracture mechanics of rare-earth permanent magnets",
-        "hero_text": "I study deformation and fracture in rare-earth permanent magnets using computational mechanics, magnetoelasticity, and multiphysics simulation.",
+        "hero_text": "Rare-earth permanent magnets are mechanically demanding, magnetically active, and difficult to model when they fracture. My research at NJIT combines computational fracture mechanics, multiphysics simulation, and coupled magneto-mechanical modeling to understand failure in these materials \u2014 toward building predictive tools for the aerospace, defense, and precision engineering systems that depend on them.",
         "cta_label": "View Research",
-        "cta_url": "#case_studies",
-        "secondary_cta_label": "CV",
-        "secondary_cta_url": "#cv",
+        "cta_url": "#/research",
+        "secondary_cta_label": null,
+        "secondary_cta_url": null,
         "tertiary_cta_label": "Contact",
-        "tertiary_cta_url": "#contact_booking",
+        "tertiary_cta_url": "mailto:tb457@njit.edu",
         "image": "/images/tareq.jpeg"
       },
       "items": null,
@@ -278,7 +264,7 @@
     {
       "type": "skills",
       "priority": null,
-      "description": "Core tools I use for computational mechanics research, simulation, and scientific programming.",
+      "description": null,
       "layout": {
         "type": "flex",
         "direction": null,
@@ -305,9 +291,9 @@
           "icon": "https://upload.wikimedia.org/wikipedia/commons/1/14/Ansys_logo_%282019%29.svg"
         },
         {
-          "name": "Abaqus",
+          "name": "SIMULIA Abaqus",
           "category": "Simulation & Modeling",
-          "icon": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Abaqus_Logo.png"
+          "icon": "/logos/simulia-abaqus.png"
         },
         {
           "name": "COMSOL",
@@ -345,7 +331,22 @@
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fortran/fortran-original.svg"
         },
         {
-          "name": "Computational Fluid Dynamics",
+          "name": "Continuum Modeling",
+          "category": "Research Methods",
+          "icon": null
+        },
+        {
+          "name": "Finite Element Methods",
+          "category": "Research Methods",
+          "icon": null
+        },
+        {
+          "name": "Multiphysics Simulation",
+          "category": "Research Methods",
+          "icon": null
+        },
+        {
+          "name": "Cohesive Zone Modeling",
           "category": "Research Methods",
           "icon": null
         }
@@ -581,14 +582,14 @@
           "title": "Fracture Mechanics of Magnets",
           "client": null,
           "industry": "Computational Mechanics / Materials Science",
-          "image": "https://source.unsplash.com/featured/?magnet,fracture,materials",
+          "image": null,
           "tags": [
             "Fracture Mechanics",
             "Magnets",
             "Computational Simulation",
             "NJIT"
           ],
-          "summary": "Ongoing graduate-level research investigating the fracture behavior of magnetic materials using advanced computational mechanics techniques at NJIT's Computational Mechanics & Physics Lab.",
+          "summary": "Ongoing graduate research on fracture behavior in magnetic materials using computational mechanics and multiphysics simulation.",
           "problem": "Understanding how magnets fracture under mechanical and magnetic loading is critical for engineering applications in motors, sensors, and structural components. The failure mechanisms in magnetic materials remain an active area of investigation.",
           "approach": "Applying computational simulation frameworks \u2014 including finite element analysis tools such as Abaqus and COMSOL \u2014 to model stress distribution, crack initiation, and propagation in magnetic materials under various loading conditions.",
           "result": "Ongoing research contributing to the fundamental understanding of magneto-mechanical coupling and fracture in permanent magnets, with implications for improving material durability in engineering applications.",
@@ -613,7 +614,7 @@
           "title": "Aerodynamic Analysis of Ahmed Body Model with Underbody Diffuser",
           "client": null,
           "industry": "Computational Fluid Dynamics / Automotive Aerodynamics",
-          "image": "https://source.unsplash.com/featured/?aerodynamics,car,wind,tunnel",
+          "image": null,
           "tags": [
             "CFD",
             "ANSYS Fluent",
@@ -621,11 +622,15 @@
             "Aerodynamics",
             "Undergraduate Thesis"
           ],
-          "summary": "Undergraduate thesis project conducting a comprehensive computational study on the aerodynamic behavior of the Ahmed body model, specifically analyzing the effects of an underbody diffuser on drag, lift, and flow characteristics.",
+          "summary": "Undergraduate thesis project analyzing how underbody diffuser geometry affects Ahmed body drag, lift, and flow behavior.",
           "problem": "Underbody diffusers significantly influence vehicle aerodynamics, affecting fuel efficiency and stability. However, computational characterization of their effect on standardized bluff body models (Ahmed body) requires detailed CFD analysis to quantify aerodynamic improvements.",
           "approach": "Used ANSYS Fluent for computational fluid dynamics simulations and SolidWorks for 3D modeling of the Ahmed body geometry with varying diffuser configurations. Tecplot 360 was used for post-processing and visualization of pressure fields, velocity contours, and wake structures.",
           "result": "Successfully characterized the aerodynamic impact of underbody diffuser geometry on the Ahmed body model, providing quantitative insights into drag reduction and downforce generation. Research supervised by Associate Professor Syed Masrur Ahmmad at CUET.",
           "metrics": [
+            {
+              "label": "Institution",
+              "value": "CUET"
+            },
             {
               "label": "Simulation Tool",
               "value": "ANSYS Fluent"
@@ -672,7 +677,7 @@
       "priority": "high",
       "layout": null,
       "props": {
-        "title": "Publications & Presentations"
+        "title": "Publications"
       },
       "items": [
         {
@@ -763,8 +768,8 @@
         "mobile": null
       },
       "props": {
-        "title": "My Journey",
-        "subtitle": "From undergraduate excellence to cutting-edge graduate research"
+        "title": "Academic Timeline",
+        "subtitle": null
       },
       "items": [
         {
@@ -772,7 +777,7 @@
           "year": "2018",
           "title": "Enrolled in B.Sc. Mechanical Engineering",
           "subtitle": "Chittagong University of Engineering and Technology (CUET)",
-          "description": "Began undergraduate studies in Mechanical Engineering at CUET, one of Bangladesh's premier engineering institutions. Participated in debating competitions and student organizations from the first year.",
+          "description": "Began undergraduate studies in Mechanical Engineering at CUET.",
           "icon": null,
           "milestone_type": "education",
           "color_override": null
@@ -782,7 +787,7 @@
           "year": "2019",
           "title": "Joined Multiple Student Organizations",
           "subtitle": "CUET Debating Society, Green for Peace, Andromeda Space and Robotic Research Organization",
-          "description": "Actively engaged in extracurricular activities including debating, environmental advocacy, and space & robotics research organizations, building leadership and interdisciplinary interests.",
+          "description": "Built leadership and interdisciplinary experience through debating, environmental advocacy, and student research organizations.",
           "icon": null,
           "milestone_type": "milestone",
           "color_override": null
@@ -792,7 +797,7 @@
           "year": "2020",
           "title": "Appointed Judge \u2013 Inter-Department Debating Competition",
           "subtitle": "CUET",
-          "description": "Recognized for academic and communicative excellence by being appointed as a judge in the Inter-Department Debating Competition.",
+          "description": "Recognized for communication and academic maturity through judging responsibilities.",
           "icon": null,
           "milestone_type": "milestone",
           "color_override": null
@@ -802,7 +807,7 @@
           "year": "2021",
           "title": "Elected Vice President",
           "subtitle": "Greater Noakhali Student Forum, CUET",
-          "description": "Took on a leadership role as Vice President of the Greater Noakhali Student Forum, organizing community events and representing student interests.",
+          "description": "Led community activities and represented student interests for the Greater Noakhali Student Forum.",
           "icon": null,
           "milestone_type": "job",
           "color_override": null
@@ -812,7 +817,7 @@
           "year": "2022",
           "title": "Commenced Undergraduate Thesis Research",
           "subtitle": "Computational Aerodynamics, CUET",
-          "description": "Began thesis research on the aerodynamic behavior of the Ahmed body model with underbody diffusers, using ANSYS Fluent and SolidWorks under the supervision of Associate Professor Syed Masrur Ahmmad.",
+          "description": "Started computational aerodynamics thesis work using ANSYS Fluent and SolidWorks.",
           "icon": null,
           "milestone_type": "education",
           "color_override": null
@@ -822,7 +827,7 @@
           "year": "2023",
           "title": "Industrial Attachment at Unilever Bangladesh",
           "subtitle": "Kalurghat Heavy Industrial Area, Chittagong",
-          "description": "Gained hands-on industrial experience at Unilever Bangladesh, contributing to a project aimed at reducing excess give away (EGA) in sachet manufacturing.",
+          "description": "Completed industrial training at Unilever Bangladesh with process analysis work on sachet manufacturing.",
           "icon": null,
           "milestone_type": "job",
           "color_override": null
@@ -832,7 +837,7 @@
           "year": "2023",
           "title": "Graduated B.Sc. Mechanical Engineering With Honors",
           "subtitle": "CUET \u2013 CGPA 3.83/4.00, 6th out of 128",
-          "description": "Successfully completed undergraduate studies with distinction, graduating with honors and achieving the 6th merit position in a cohort of 128 students.",
+          "description": "Graduated with honors, CGPA 3.83/4.00, ranking 6th among 128 students.",
           "icon": null,
           "milestone_type": "education",
           "color_override": null
@@ -842,7 +847,7 @@
           "year": "2025",
           "title": "Graduate Research Assistant \u2013 NJIT",
           "subtitle": "Computational Mechanics & Physics Lab, Department of Mechanical and Industrial Engineering",
-          "description": "Joined the Computational Mechanics & Physics Lab at New Jersey Institute of Technology to pursue graduate-level research on the fracture mechanics of magnets, marking a significant step into advanced computational materials research.",
+          "description": "Joined the Computational Mechanics & Physics Lab at NJIT to study fracture mechanics of magnetic materials.",
           "icon": null,
           "milestone_type": "job",
           "color_override": null
@@ -909,18 +914,13 @@
       "props": {
         "logo": "",
         "name": "Tareq Bin Taher",
-        "contact_email": "tareqbintaher1@gmail.com",
         "links": [
           {
             "label": "LinkedIn",
             "url": "https://www.linkedin.com/in/tareq-bin-taher"
           },
           {
-            "label": "Email (Personal)",
-            "url": "mailto:tareqbintaher1@gmail.com"
-          },
-          {
-            "label": "Email (NJIT)",
+            "label": "Email",
             "url": "mailto:tb457@njit.edu"
           }
         ]

@@ -3,7 +3,7 @@ import SectionHeader from './SectionHeader'
 import { getThemeColors, CONTENT_MAX_WIDTH } from '../theme'
 
 export default function Timeline({ section, theme }) {
-  const { primary, secondary, accent, divider, background } = getThemeColors(theme)
+  const { primary, secondary, accent, divider, background, surface } = getThemeColors(theme)
   const items = section?.items || []
   const sortedItems = [...items].sort((a, b) => Number(b.year) - Number(a.year))
   const title = section?.props?.title || 'Education / Timeline'
@@ -18,24 +18,40 @@ export default function Timeline({ section, theme }) {
               key={item.id || idx}
               style={{
                 display: 'grid',
-                gridTemplateColumns: '90px minmax(0, 1fr)',
-                gap: '1rem',
+                gridTemplateColumns: '76px minmax(0, 1fr)',
+                gap: '1.1rem',
                 border: `1px solid ${divider}`,
                 borderRadius: 8,
                 backgroundColor: background,
-                padding: '1rem',
+                padding: '1.1rem',
               }}
             >
-              <div style={{ color: accent, fontWeight: 800, fontSize: '0.9rem' }}>{item.year}</div>
               <div>
-                <h3 style={{ margin: 0, color: primary, fontSize: '1rem', lineHeight: 1.35 }}>{item.title}</h3>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    border: `1px solid ${divider}`,
+                    borderRadius: 999,
+                    backgroundColor: surface,
+                    color: primary,
+                    fontSize: '0.76rem',
+                    fontWeight: 800,
+                    lineHeight: 1,
+                    padding: '0.35rem 0.6rem',
+                  }}
+                >
+                  {item.year}
+                </span>
+              </div>
+              <div>
+                <h3 style={{ margin: 0, color: primary, fontSize: '1rem', fontWeight: 800, lineHeight: 1.35 }}>{item.title}</h3>
                 {item.subtitle && (
-                  <div style={{ color: secondary, opacity: 0.78, fontSize: '0.88rem', marginTop: '0.25rem' }}>
+                  <div style={{ color: secondary, opacity: 0.72, fontSize: '0.82rem', marginTop: '0.25rem', lineHeight: 1.45 }}>
                     {item.subtitle}
                   </div>
                 )}
                 {item.description && (
-                  <p style={{ color: secondary, opacity: 0.82, fontSize: '0.9rem', lineHeight: 1.65, margin: '0.55rem 0 0' }}>
+                  <p style={{ color: secondary, opacity: 0.82, fontSize: '0.88rem', lineHeight: 1.55, margin: '0.45rem 0 0' }}>
                     {item.description}
                   </p>
                 )}

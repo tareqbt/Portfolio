@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import portfolioData from './portfolio-data.json'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -104,6 +105,8 @@ export default function App() {
   }
 
   const isHomeRoute = HOME_ROUTES.has(route)
+  const analyticsPath =
+    typeof window === 'undefined' ? '/' : `${window.location.pathname}${window.location.hash}`
 
   return (
     <div
@@ -143,6 +146,7 @@ export default function App() {
       )}
 
       {renderSection('footer')}
+      <Analytics route={`/${route}`} path={analyticsPath} />
     </div>
   )
 }

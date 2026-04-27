@@ -1,22 +1,15 @@
 import React from 'react'
 import SectionHeader from './SectionHeader'
-
-function getColors(theme) {
-  const palette = theme?.colorPalette ?? theme?.color_palette ?? []
-  return {
-    primary: palette[0] || '#1917fc',
-    secondary: palette[1] || '#134331',
-    accent: palette[2] || '#ed2f25',
-  }
-}
+import { getThemeColors } from '../theme'
+import { CONTENT_MAX_WIDTH } from '../theme'
 
 export default function Experience({ section, theme }) {
   const items = section?.items || []
-  const { primary, secondary, accent } = getColors(theme)
+  const { primary, secondary, accent } = getThemeColors(theme)
 
   return (
     <section id="experience" style={{ width: '100%', padding: '4rem 1.5rem' }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: '0 auto' }}>
       <SectionHeader label="EXPERIENCE" heading="Experience" description={section?.description} primary={primary} accent={accent} />
       <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
         {items.length > 0 ? (
@@ -25,7 +18,7 @@ export default function Experience({ section, theme }) {
               key={idx}
               style={{
                 marginBottom: '1.5rem',
-                borderLeft: `2px solid ${primary}`,
+                borderLeft: `2px solid ${accent}`,
                 paddingLeft: '1rem',
               }}
             >

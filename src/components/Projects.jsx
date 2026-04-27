@@ -1,20 +1,13 @@
 import React from 'react'
 import SectionHeader from './SectionHeader'
-
-function getColors(theme) {
-  const palette = theme?.colorPalette ?? theme?.color_palette ?? []
-  return {
-    primary: palette[0] || '#1917fc',
-    secondary: palette[1] || '#134331',
-    accent: palette[2] || '#ed2f25',
-  }
-}
+import { getThemeColors } from '../theme'
+import { CONTENT_MAX_WIDTH } from '../theme'
 
 export default function Projects({ section, theme }) {
   const { layout, itemLayout, items } = section
-  const { primary, secondary, accent } = getColors(theme)
+  const { primary, secondary, accent, divider, surface, background } = getThemeColors(theme)
 
-  const outerStyle = { width: '100%', padding: '4rem 1.5rem' }
+  const outerStyle = { width: '100%', padding: '4rem 1.5rem', backgroundColor: surface }
 
   const containerStyle = {
     display: layout?.type || 'flex',
@@ -28,7 +21,8 @@ export default function Projects({ section, theme }) {
   const cardBase = {
     maxWidth: itemLayout?.constraints?.maxWidth,
     width: '100%',
-    border: `2px solid ${secondary}`,
+    border: `2px solid ${divider}`,
+    backgroundColor: background,
     borderRadius: 12,
     padding: 16,
     transition: 'all 0.3s ease',
@@ -44,7 +38,7 @@ export default function Projects({ section, theme }) {
 
   return (
     <section id="projects" style={outerStyle}>
-      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: '0 auto' }}>
       <SectionHeader label="PROJECTS" heading="Projects" description={section?.description} primary={primary} accent={accent} />
       <div style={containerStyle}>
         {(items || []).map((project, idx) => (
@@ -57,7 +51,7 @@ export default function Projects({ section, theme }) {
               e.currentTarget.style.boxShadow = `0 8px 24px ${accent}30`
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = secondary
+              e.currentTarget.style.borderColor = divider
               e.currentTarget.style.transform = 'translateY(0)'
               e.currentTarget.style.boxShadow = 'none'
             }}
@@ -89,7 +83,7 @@ export default function Projects({ section, theme }) {
                     marginTop: 'auto',
                     textDecoration: 'none',
                     textAlign: 'center',
-                    backgroundColor: primary,
+                    backgroundColor: accent,
                     color: '#fff',
                     border: `2px solid ${accent}`,
                     borderRadius: 10,

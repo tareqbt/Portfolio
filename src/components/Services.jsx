@@ -1,14 +1,7 @@
 import React, { useState } from 'react'
 import SectionHeader from './SectionHeader'
-
-function getColors(theme) {
-  const palette = theme?.colorPalette ?? theme?.color_palette ?? []
-  return {
-    primary: palette[0] || '#1917fc',
-    secondary: palette[1] || '#134331',
-    accent: palette[2] || '#ed2f25',
-  }
-}
+import { getThemeColors } from '../theme'
+import { CONTENT_MAX_WIDTH } from '../theme'
 
 function ServiceIcon({ icon, title, accent }) {
   if (icon) return <img src={icon} alt={title} style={{ width: 40, height: 40, objectFit: 'contain' }} />
@@ -38,12 +31,12 @@ function FeaturesList({ features, accent }) {
   )
 }
 
-function PriceLabel({ label, primary }) {
+function PriceLabel({ label, accent }) {
   if (!label) return null
   return (
     <span style={{
       display: 'inline-block',
-      backgroundColor: `${primary}15`, color: primary,
+      backgroundColor: `${accent}15`, color: accent,
       borderRadius: 9999, fontSize: '0.8rem', fontWeight: 600,
       padding: '2px 10px', marginTop: '0.75rem',
     }}>{label}</span>
@@ -52,7 +45,7 @@ function PriceLabel({ label, primary }) {
 
 /* ── cards variant ─────────────────────────────── */
 
-function ServicesCards({ items, primary, secondary, accent }) {
+function ServicesCards({ items, primary, secondary, accent, divider, background }) {
   const [hovered, setHovered] = useState(null)
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1.5rem' }}>
@@ -61,7 +54,8 @@ function ServicesCards({ items, primary, secondary, accent }) {
           key={item.id || idx}
           style={{
             display: 'flex', flexDirection: 'column',
-            border: `2px solid ${hovered === idx ? accent : `${secondary}30`}`,
+            border: `2px solid ${hovered === idx ? accent : divider}`,
+            backgroundColor: background,
             borderRadius: 12, padding: '1.5rem',
             transform: hovered === idx ? 'translateY(-4px)' : 'translateY(0)',
             boxShadow: hovered === idx ? `0 8px 24px ${accent}30` : 'none',
@@ -75,11 +69,11 @@ function ServicesCards({ items, primary, secondary, accent }) {
           <p style={{ color: secondary, opacity: 0.85, margin: 0, fontSize: '0.875rem', lineHeight: 1.6 }}>{item.description}</p>
           <FeaturesList features={item.features} accent={accent} />
           <div style={{ marginTop: 'auto' }}>
-            <PriceLabel label={item.price_label} primary={primary} />
+            <PriceLabel label={item.price_label} accent={accent} />
             {item.cta_url && (
               <a href={item.cta_url} target="_blank" rel="noreferrer" style={{
                 display: 'block', textAlign: 'center', textDecoration: 'none',
-                marginTop: '1rem', backgroundColor: primary, color: '#fff',
+                marginTop: '1rem', backgroundColor: accent, color: '#fff',
                 border: `2px solid ${accent}`, borderRadius: 8,
                 padding: '0.5rem 1rem', fontSize: '0.875rem', fontWeight: 600,
               }}>{item.cta_label || 'Get Started'}</a>
@@ -93,14 +87,14 @@ function ServicesCards({ items, primary, secondary, accent }) {
 
 /* ── list variant ──────────────────────────────── */
 
-function ServicesList({ items, primary, secondary, accent }) {
+function ServicesList({ items, primary, secondary, accent, divider }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       {items.map((item, idx) => (
         <div key={item.id || idx} style={{
           display: 'flex', flexDirection: 'row', alignItems: 'center',
           gap: '1.5rem', padding: '1.25rem 0',
-          borderBottom: idx < items.length - 1 ? `1px solid ${secondary}20` : 'none',
+          borderBottom: idx < items.length - 1 ? `1px solid ${divider}` : 'none',
         }}>
           <ServiceIcon icon={item.icon} title={item.title} accent={accent} />
           <div style={{ flex: 1 }}>
@@ -115,10 +109,10 @@ function ServicesList({ items, primary, secondary, accent }) {
             )}
           </div>
           <div style={{ minWidth: 140, textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.5rem' }}>
-            <PriceLabel label={item.price_label} primary={primary} />
+            <PriceLabel label={item.price_label} accent={accent} />
             {item.cta_url && (
               <a href={item.cta_url} target="_blank" rel="noreferrer" style={{
-                textDecoration: 'none', backgroundColor: primary, color: '#fff',
+                textDecoration: 'none', backgroundColor: accent, color: '#fff',
                 border: `2px solid ${accent}`, borderRadius: 8,
                 padding: '0.375rem 0.875rem', fontSize: '0.8rem', fontWeight: 600, whiteSpace: 'nowrap',
               }}>{item.cta_label || 'Get Started'}</a>
@@ -132,7 +126,7 @@ function ServicesList({ items, primary, secondary, accent }) {
 
 /* ── pricing variant ───────────────────────────── */
 
-function ServicesPricing({ items, primary, secondary, accent }) {
+function ServicesPricing({ items, primary, secondary, accent, divider, background }) {
   const [hovered, setHovered] = useState(null)
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1.5rem', alignItems: 'start' }}>
@@ -141,7 +135,8 @@ function ServicesPricing({ items, primary, secondary, accent }) {
           key={item.id || idx}
           style={{
             position: 'relative', display: 'flex', flexDirection: 'column',
-            border: item.featured ? `2px solid ${accent}` : `2px solid ${hovered === idx ? `${accent}80` : `${secondary}30`}`,
+            border: item.featured ? `2px solid ${accent}` : `2px solid ${hovered === idx ? `${accent}80` : divider}`,
+            backgroundColor: background,
             borderRadius: 12,
             padding: item.featured ? '2rem 1.5rem' : '1.5rem',
             boxShadow: item.featured ? `0 8px 32px ${accent}30` : 'none',
@@ -165,11 +160,11 @@ function ServicesPricing({ items, primary, secondary, accent }) {
           <p style={{ color: secondary, opacity: 0.85, margin: 0, fontSize: '0.875rem', lineHeight: 1.6 }}>{item.description}</p>
           <FeaturesList features={item.features} accent={accent} />
           <div style={{ marginTop: 'auto' }}>
-            <PriceLabel label={item.price_label} primary={primary} />
+            <PriceLabel label={item.price_label} accent={accent} />
             {item.cta_url && (
               <a href={item.cta_url} target="_blank" rel="noreferrer" style={{
                 display: 'block', textAlign: 'center', textDecoration: 'none',
-                marginTop: '1rem', backgroundColor: primary, color: '#fff',
+                marginTop: '1rem', backgroundColor: accent, color: '#fff',
                 border: `2px solid ${accent}`, borderRadius: 8,
                 padding: '0.5rem 1rem', fontSize: '0.875rem', fontWeight: 600,
               }}>{item.cta_label || 'Get Started'}</a>
@@ -184,7 +179,7 @@ function ServicesPricing({ items, primary, secondary, accent }) {
 /* ── main export ───────────────────────────────── */
 
 export default function Services({ section, theme }) {
-  const { primary, secondary, accent } = getColors(theme)
+  const { primary, secondary, accent, divider, surface, background } = getThemeColors(theme)
   const items = section?.items || []
   const variant = section?.layout?.variant || 'cards'
   const title = section?.props?.title || 'Services'
@@ -193,23 +188,23 @@ export default function Services({ section, theme }) {
   const sectionCtaUrl = section?.props?.cta_url || null
 
   return (
-    <section id="services" style={{ width: '100%', padding: '4rem 1.5rem' }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+    <section id="services" style={{ width: '100%', padding: '4rem 1.5rem', backgroundColor: surface }}>
+      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: '0 auto' }}>
       <SectionHeader label="SERVICES" heading={title} description={subtitle} primary={primary} accent={accent} />
       {items.length === 0 ? (
         <p style={{ color: secondary, opacity: 0.6 }}>No services listed.</p>
       ) : variant === 'list' ? (
-        <ServicesList items={items} primary={primary} secondary={secondary} accent={accent} />
+        <ServicesList items={items} primary={primary} secondary={secondary} accent={accent} divider={divider} />
       ) : variant === 'pricing' ? (
-        <ServicesPricing items={items} primary={primary} secondary={secondary} accent={accent} />
+        <ServicesPricing items={items} primary={primary} secondary={secondary} accent={accent} divider={divider} background={background} />
       ) : (
-        <ServicesCards items={items} primary={primary} secondary={secondary} accent={accent} />
+        <ServicesCards items={items} primary={primary} secondary={secondary} accent={accent} divider={divider} background={background} />
       )}
       {sectionCtaLabel && sectionCtaUrl && (
         <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
           <a href={sectionCtaUrl} style={{
             display: 'inline-block', textDecoration: 'none',
-            backgroundColor: primary, color: '#fff',
+            backgroundColor: accent, color: '#fff',
             border: `2px solid ${accent}`, borderRadius: 10,
             padding: '0.625rem 1.75rem', fontSize: '0.9rem', fontWeight: 600,
           }}>{sectionCtaLabel}</a>

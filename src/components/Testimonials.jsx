@@ -1,20 +1,13 @@
 import React, { useState } from 'react'
 import SectionHeader from './SectionHeader'
+import { getThemeColors } from '../theme'
+import { CONTENT_MAX_WIDTH } from '../theme'
 
-function getColors(theme) {
-  const palette = theme?.colorPalette ?? theme?.color_palette ?? []
-  return {
-    primary: palette[0] || '#1917fc',
-    secondary: palette[1] || '#134331',
-    accent: palette[2] || '#ed2f25',
-  }
-}
-
-function StarRating({ rating, accent, secondary }) {
+function StarRating({ rating, accent, divider }) {
   return (
     <div style={{ display: 'flex', gap: 2, marginBottom: '0.75rem' }}>
       {Array.from({ length: 5 }).map((_, i) => (
-        <span key={i} style={{ fontSize: '1rem', color: i < rating ? accent : `${secondary}40` }}>
+        <span key={i} style={{ fontSize: '1rem', color: i < rating ? accent : divider }}>
           {i < rating ? '★' : '☆'}
         </span>
       ))}
@@ -75,7 +68,7 @@ function AuthorRow({ item, primary, secondary }) {
 
 /* ── cards variant ─────────────────────────────── */
 
-function TestimonialsCards({ items, primary, secondary, accent }) {
+function TestimonialsCards({ items, primary, secondary, accent, divider, background }) {
   const [hovered, setHovered] = useState(null)
   return (
     <div
@@ -91,7 +84,8 @@ function TestimonialsCards({ items, primary, secondary, accent }) {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            border: `2px solid ${hovered === idx ? accent : `${secondary}30`}`,
+            border: `2px solid ${hovered === idx ? accent : divider}`,
+            backgroundColor: background,
             borderRadius: 12,
             padding: '1.5rem',
             transform: hovered === idx ? 'translateY(-4px)' : 'translateY(0)',
@@ -102,7 +96,7 @@ function TestimonialsCards({ items, primary, secondary, accent }) {
           onMouseEnter={() => setHovered(idx)}
           onMouseLeave={() => setHovered(null)}
         >
-          <StarRating rating={item.rating ?? 5} accent={accent} secondary={secondary} />
+          <StarRating rating={item.rating ?? 5} accent={accent} divider={divider} />
           <div style={{ color: primary, fontSize: '2.5rem', lineHeight: 1, marginBottom: '0.25rem', fontFamily: 'serif' }}>
             &ldquo;
           </div>
@@ -116,7 +110,7 @@ function TestimonialsCards({ items, primary, secondary, accent }) {
 
 /* ── list variant ──────────────────────────────── */
 
-function TestimonialsList({ items, primary, secondary, accent }) {
+function TestimonialsList({ items, primary, secondary, accent, divider }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       {items.map((item, idx) => (
@@ -124,7 +118,7 @@ function TestimonialsList({ items, primary, secondary, accent }) {
           key={item.id || idx}
           style={{ borderLeft: `4px solid ${accent}`, paddingLeft: '1.5rem', paddingTop: '0.5rem', paddingBottom: '0.5rem' }}
         >
-          <StarRating rating={item.rating ?? 5} accent={accent} secondary={secondary} />
+          <StarRating rating={item.rating ?? 5} accent={accent} divider={divider} />
           <div style={{ color: primary, fontSize: '2rem', lineHeight: 1, marginBottom: '0.25rem', fontFamily: 'serif' }}>
             &ldquo;
           </div>
@@ -138,14 +132,14 @@ function TestimonialsList({ items, primary, secondary, accent }) {
 
 /* ── carousel variant ──────────────────────────── */
 
-function TestimonialsCarousel({ items, primary, secondary, accent }) {
+function TestimonialsCarousel({ items, primary, secondary, accent, divider, background }) {
   const [activeIdx, setActiveIdx] = useState(0)
   const item = items[activeIdx]
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
-      <div style={{ width: '100%', maxWidth: 600, border: `2px solid ${secondary}30`, borderRadius: 12, padding: '2rem', display: 'flex', flexDirection: 'column' }}>
-        <StarRating rating={item.rating ?? 5} accent={accent} secondary={secondary} />
+      <div style={{ width: '100%', maxWidth: 600, border: `2px solid ${divider}`, backgroundColor: background, borderRadius: 12, padding: '2rem', display: 'flex', flexDirection: 'column' }}>
+        <StarRating rating={item.rating ?? 5} accent={accent} divider={divider} />
         <div style={{ color: primary, fontSize: '2.5rem', lineHeight: 1, marginBottom: '0.25rem', fontFamily: 'serif' }}>
           &ldquo;
         </div>
@@ -172,7 +166,7 @@ function TestimonialsCarousel({ items, primary, secondary, accent }) {
           {items.map((_, i) => (
             <button key={i} onClick={() => setActiveIdx(i)} style={{
               width: i === activeIdx ? 20 : 8, height: 8, borderRadius: 4, border: 'none',
-              backgroundColor: i === activeIdx ? accent : `${secondary}40`,
+              backgroundColor: i === activeIdx ? accent : divider,
               cursor: 'pointer', transition: 'all 0.3s ease', padding: 0,
             }} />
           ))}
@@ -199,24 +193,24 @@ function TestimonialsCarousel({ items, primary, secondary, accent }) {
 /* ── main export ───────────────────────────────── */
 
 export default function Testimonials({ section, theme }) {
-  const { primary, secondary, accent } = getColors(theme)
+  const { primary, secondary, accent, divider, surface, background } = getThemeColors(theme)
   const items = section?.items || []
   const variant = section?.layout?.variant || 'cards'
   const title = section?.props?.title || 'What People Say'
   const subtitle = section?.props?.subtitle || null
 
   return (
-    <section id="testimonials" style={{ width: '100%', padding: '4rem 1.5rem' }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+    <section id="testimonials" style={{ width: '100%', padding: '4rem 1.5rem', backgroundColor: surface }}>
+      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: '0 auto' }}>
       <SectionHeader label="TESTIMONIALS" heading={title} description={subtitle} primary={primary} accent={accent} />
       {items.length === 0 ? (
         <p style={{ color: secondary, opacity: 0.6 }}>No testimonials listed.</p>
       ) : variant === 'list' ? (
-        <TestimonialsList items={items} primary={primary} secondary={secondary} accent={accent} />
+        <TestimonialsList items={items} primary={primary} secondary={secondary} accent={accent} divider={divider} />
       ) : variant === 'carousel' ? (
-        <TestimonialsCarousel items={items} primary={primary} secondary={secondary} accent={accent} />
+        <TestimonialsCarousel items={items} primary={primary} secondary={secondary} accent={accent} divider={divider} background={background} />
       ) : (
-        <TestimonialsCards items={items} primary={primary} secondary={secondary} accent={accent} />
+        <TestimonialsCards items={items} primary={primary} secondary={secondary} accent={accent} divider={divider} background={background} />
       )}
       </div>
     </section>

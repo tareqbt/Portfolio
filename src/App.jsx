@@ -10,6 +10,11 @@ import Testimonials from './components/Testimonials'
 import Services from './components/Services'
 import Achievements from './components/Achievements'
 import CaseStudies from './components/CaseStudies'
+import Gallery from './components/Gallery'
+import CV from './components/CV'
+import Publications from './components/Publications'
+import Timeline from './components/Timeline'
+import { getThemeColors } from './theme'
 
 /* ── helpers ────────────────────────────────────────── */
 
@@ -44,13 +49,34 @@ const SECTION_MAP = {
   services: Services,
   achievements: Achievements,
   case_studies: CaseStudies,
+  publications: Publications,
+  career_timeline: Timeline,
+  gallery: Gallery,
+  cv: CV,
 }
+
+const SECTION_ORDER = [
+  'navbar',
+  'hero',
+  'case_studies',
+  'publications',
+  'experience',
+  'career_timeline',
+  'skills',
+  'gallery',
+  'cv',
+  'footer',
+]
 
 /* ── app ────────────────────────────────────────────── */
 
 export default function App() {
   const theme = normalizeTheme(portfolioData.theme)
+  const colors = getThemeColors(theme)
   const sections = portfolioData.sections ?? []
+  const orderedSections = SECTION_ORDER
+    .map((type) => sections.find((section) => section?.type === type))
+    .filter(Boolean)
 
   return (
     <div
@@ -62,12 +88,10 @@ export default function App() {
         flexDirection: theme.flexDirection,
         alignItems: theme.alignItems,
         minHeight: '100vh',
-        backgroundColor: theme.colorPalette.length > 0
-          ? theme.colorPalette[theme.colorPalette.length - 1]
-          : undefined,
+        backgroundColor: colors.background,
       }}
     >
-      {sections.map((section, idx) => {
+      {orderedSections.map((section, idx) => {
         const Component = SECTION_MAP[section?.type]
         if (!Component) return null
         const key = section?.id ?? `${section?.type}-${idx}`

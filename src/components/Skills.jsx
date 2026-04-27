@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import SectionHeader from './SectionHeader'
-
-function getColors(theme) {
-  const palette = theme?.colorPalette ?? theme?.color_palette ?? []
-  return {
-    primary: palette[0] || '#1917fc',
-    secondary: palette[1] || '#134331',
-    accent: palette[2] || '#ed2f25',
-  }
-}
+import { getThemeColors } from '../theme'
+import { CONTENT_MAX_WIDTH } from '../theme'
 
 export default function Skills({ section, theme }) {
   const layout = section?.layout || {}
   const items = section?.items || []
-  const { primary, secondary, accent } = getColors(theme)
+  const { primary, secondary, accent, divider, background } = getThemeColors(theme)
 
   const [isMobile, setIsMobile] = useState(false)
 
@@ -29,64 +22,113 @@ export default function Skills({ section, theme }) {
   const activeCols = isMobile ? mobileCols : desktopCols
   const gap = layout?.gap || '1.5rem'
   const cardWidth = `calc((100% - (${gap} * ${activeCols - 1})) / ${activeCols})`
+  const categoryOrder = ['Simulation & Modeling', 'Programming & Computing', 'Engineering Tools', 'Research Methods']
+  const groupedItems = items.reduce((groups, skill) => {
+    const category = skill.category || 'Research Methods'
+    if (!groups[category]) groups[category] = []
+    groups[category].push(skill)
+    return groups
+  }, {})
+  const categories = [
+    ...categoryOrder.filter((category) => groupedItems[category]),
+    ...Object.keys(groupedItems).filter((category) => !categoryOrder.includes(category)),
+  ]
 
   const containerStyle = {
     display: 'flex',
     flexWrap: 'wrap',
     gap,
-    justifyContent: 'center',
-    padding: '2rem 0',
+    justifyContent: 'flex-start',
+    padding: '1rem 0 0',
     width: '100%',
   }
 
   const cardBase = {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     alignItems: 'center',
-    gap: '0.5rem',
-    padding: '1rem',
-    border: `2px solid ${secondary}`,
+    gap: '0.75rem',
+    padding: '0.85rem',
+    border: `1px solid ${divider}`,
+    backgroundColor: background,
     borderRadius: 8,
-    minWidth: 120,
-    transition: 'all 0.3s ease',
-    cursor: 'pointer',
+    minWidth: isMobile ? 0 : 180,
+    transition: 'border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease',
     flexBasis: cardWidth,
     flexGrow: 0,
     flexShrink: 0,
   }
 
+  const renderIcon = (skill) => {
+    if (skill.icon) {
+      return <img src={skill.icon} alt="" style={{ width: 34, height: 34, objectFit: 'contain', flexShrink: 0 }} />
+    }
+
+    const initials = (skill.name || '')
+      .split(' ')
+      .map((word) => word[0])
+      .join('')
+      .slice(0, 3)
+      .toUpperCase()
+
+    return (
+      <span
+        aria-hidden="true"
+        style={{
+          width: 34,
+          height: 34,
+          borderRadius: 6,
+          backgroundColor: `${accent}12`,
+          color: accent,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '0.72rem',
+          fontWeight: 800,
+          flexShrink: 0,
+        }}
+      >
+        {initials}
+      </span>
+    )
+  }
+
   return (
     <section id="skills" style={{ width: '100%', padding: '4rem 1.5rem' }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: '0 auto' }}>
       <SectionHeader label="SKILLS" heading="Skills" description={section?.description} primary={primary} accent={accent} />
-      <div style={containerStyle}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
         {items.length > 0 ? (
-          items.map((skill, idx) => {
-            const cardColor = idx % 3 === 0 ? primary : idx % 3 === 1 ? secondary : accent
-            return (
-              <div
-                key={idx}
-                style={{ ...cardBase }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = accent
-                  e.currentTarget.style.transform = 'translateY(-4px)'
-                  e.currentTarget.style.boxShadow = `0 4px 12px ${accent}40`
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = secondary
-                  e.currentTarget.style.transform = 'translateY(0)'
-                  e.currentTarget.style.boxShadow = 'none'
-                }}
-              >
-                {skill.icon && (
-                  <img src={skill.icon} alt={skill.name} style={{ width: 40, height: 40 }} />
-                )}
-                <span style={{ fontSize: '1.125rem', fontWeight: 500, color: cardColor }}>
-                  {skill.name || 'Skill Name'}
-                </span>
+          categories.map((category) => (
+            <div key={category}>
+              <h3 style={{ color: primary, fontSize: '0.9rem', fontWeight: 800, margin: 0, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                {category}
+              </h3>
+              <div style={containerStyle}>
+                {groupedItems[category].map((skill, idx) => (
+                  <div
+                    key={`${category}-${skill.name}-${idx}`}
+                    style={{ ...cardBase }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = accent
+                      e.currentTarget.style.transform = 'translateY(-2px)'
+                      e.currentTarget.style.boxShadow = `0 4px 14px ${accent}18`
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = divider
+                      e.currentTarget.style.transform = 'translateY(0)'
+                      e.currentTarget.style.boxShadow = 'none'
+                    }}
+                  >
+                    {renderIcon(skill)}
+                    <span style={{ fontSize: '0.95rem', fontWeight: 700, color: primary }}>
+                      {skill.name || 'Skill Name'}
+                    </span>
+                  </div>
+                ))}
               </div>
-            )
-          })
+            </div>
+          ))
         ) : (
           <p style={{ color: secondary }}>No skills listed yet.</p>
         )}

@@ -7,10 +7,10 @@
   },
   "theme": {
     "style": "modern-clean",
-    "color_palette": [],
+    "color_palette": ["#FFFFFF", "#111827", "#F3F4F6", "#E5E7EB", "#2563EB"],
     "font": "sans",
     "tone": "professional-academic",
-    "max_width": "1280px",
+    "max_width": "1440px",
     "width": "100%",
     "margin": "0 auto",
     "display": "flex",
@@ -95,28 +95,36 @@
         "cta_label": "Contact Me",
         "links": [
           {
-            "label": "About",
+            "label": "Home",
             "url": "#hero"
           },
           {
-            "label": "Skills",
-            "url": "#skills"
+            "label": "Research Highlights",
+            "url": "#case_studies"
           },
           {
-            "label": "Research",
-            "url": "#case_studies"
+            "label": "Publications & Presentations",
+            "url": "#publications"
           },
           {
             "label": "Experience",
             "url": "#experience"
           },
           {
-            "label": "Achievements",
-            "url": "#achievements"
+            "label": "Education / Timeline",
+            "url": "#career_timeline"
           },
           {
-            "label": "Timeline",
-            "url": "#career_timeline"
+            "label": "Skills",
+            "url": "#skills"
+          },
+          {
+            "label": "Gallery",
+            "url": "#gallery"
+          },
+          {
+            "label": "CV",
+            "url": "#cv"
           },
           {
             "label": "Contact",
@@ -181,10 +189,23 @@
       },
       "props": {
         "name": "Tareq Bin Taher",
-        "hero_text": "Graduate Research Assistant in Computational Mechanics at NJIT, specializing in fracture mechanics of magnets and computational simulations. Graduating with Honors (CGPA 3.83/4.00, 6th out of 128) in Mechanical Engineering, I bridge advanced numerical methods with real-world engineering challenges \u2014 from aerodynamic modeling to material fracture analysis.",
-        "cta_label": "View My Research",
+        "role": "Graduate Research Assistant",
+        "affiliation": "Computational Mechanics & Physics Lab, New Jersey Institute of Technology",
+        "research_focus": "Computational mechanics of magnet fracture, magnetoelasticity, and multiphysics simulation",
+        "research_areas": [
+          "Magnet fracture",
+          "Magnetoelasticity",
+          "Multiphysics simulation"
+        ],
+        "current_project": "Fracture mechanics of rare-earth permanent magnets",
+        "hero_text": "I study deformation and fracture in rare-earth permanent magnets using computational mechanics, magnetoelasticity, and multiphysics simulation.",
+        "cta_label": "View Research",
         "cta_url": "#case_studies",
-        "image": "https://source.unsplash.com/featured/?mechanical,engineering,research"
+        "secondary_cta_label": "CV",
+        "secondary_cta_url": "#cv",
+        "tertiary_cta_label": "Contact",
+        "tertiary_cta_url": "#contact_booking",
+        "image": "/images/tareq.jpeg"
       },
       "items": null,
       "item_layout": null
@@ -257,6 +278,7 @@
     {
       "type": "skills",
       "priority": null,
+      "description": "Core tools I use for computational mechanics research, simulation, and scientific programming.",
       "layout": {
         "type": "flex",
         "direction": null,
@@ -279,43 +301,53 @@
       "items": [
         {
           "name": "ANSYS",
-          "icon": "https://source.unsplash.com/featured/?simulation,engineering"
+          "category": "Simulation & Modeling",
+          "icon": "https://upload.wikimedia.org/wikipedia/commons/1/14/Ansys_logo_%282019%29.svg"
         },
         {
           "name": "Abaqus",
-          "icon": "https://source.unsplash.com/featured/?finite,element,analysis"
+          "category": "Simulation & Modeling",
+          "icon": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Abaqus_Logo.png"
         },
         {
           "name": "COMSOL",
-          "icon": "https://source.unsplash.com/featured/?multiphysics,simulation"
+          "category": "Simulation & Modeling",
+          "icon": "https://upload.wikimedia.org/wikipedia/commons/2/28/Comsol_logo.svg"
+        },
+        {
+          "name": "MOOSE",
+          "category": "Simulation & Modeling",
+          "icon": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Moose_Multiphysics.png"
         },
         {
           "name": "SolidWorks",
+          "category": "Engineering Tools",
           "icon": "https://cdn.worldvectorlogo.com/logos/solidworks.svg"
         },
         {
           "name": "MATLAB",
+          "category": "Programming & Computing",
           "icon": "https://cdn.worldvectorlogo.com/logos/matlab.svg"
         },
         {
           "name": "Python",
+          "category": "Programming & Computing",
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
         },
         {
           "name": "C",
+          "category": "Programming & Computing",
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg"
         },
         {
           "name": "Fortran",
+          "category": "Programming & Computing",
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fortran/fortran-original.svg"
         },
         {
-          "name": "Tecplot 360",
-          "icon": "https://source.unsplash.com/featured/?data,visualization,engineering"
-        },
-        {
           "name": "Computational Fluid Dynamics",
-          "icon": "https://source.unsplash.com/featured/?fluid,dynamics,aerodynamics"
+          "category": "Research Methods",
+          "icon": null
         }
       ],
       "item_layout": {
@@ -501,6 +533,50 @@
       },
       "items": [
         {
+          "id": "cs0",
+          "title": "Fracture Mechanics of Rare-Earth Permanent Magnets",
+          "client": "2026 Dana Knox Student Showcase Poster Session",
+          "industry": "Computational Mechanics / Magnetoelasticity",
+          "image": "/images/posters/dana-knox-2026.jpg",
+          "image_fit": "contain",
+          "presentation_images": [
+            {
+              "image": "/images/posters/poster-presentation.jpg",
+              "title": "Presenting at the Dana Knox Student Showcase"
+            },
+            {
+              "image": "/images/posters/poster_presentation_with_dr_liu.jpg",
+              "title": "Poster presentation with Dr. Xing Liu"
+            }
+          ],
+          "tags": [
+            "Poster Presentation",
+            "Dana Knox Student Showcase",
+            "Rare-Earth Magnets",
+            "Fracture Mechanics",
+            "NJIT"
+          ],
+          "summary": "Poster presentation at the 2026 Dana Knox Student Showcase Poster Session, highlighting computational research on deformation and fracture behavior in rare-earth permanent magnets under coupled magneto-mechanical loading.",
+          "problem": "Rare-earth permanent magnets are central to modern technologies but are mechanically brittle, creating fracture risks during manufacturing, handling, and high-speed operation.",
+          "approach": "Developed a multiphysics continuum framework integrating magnetoelasticity, coupled mechanical and magnetic loading, and data-driven fracture analysis to predict fracture behavior in permanent magnets.",
+          "result": "Presented preliminary computational mechanics results and a proposed theoretical framework for improving reliability and mitigating premature failure in rare-earth magnet applications.",
+          "metrics": [
+            {
+              "label": "Event",
+              "value": "Dana Knox Student Showcase"
+            },
+            {
+              "label": "Date",
+              "value": "April 8, 2026"
+            },
+            {
+              "label": "Institution",
+              "value": "NJIT"
+            }
+          ],
+          "link_url": null
+        },
+        {
           "id": "cs1",
           "title": "Fracture Mechanics of Magnets",
           "client": null,
@@ -590,6 +666,83 @@
         },
         "constraints": null
       }
+    },
+    {
+      "type": "publications",
+      "priority": "high",
+      "layout": null,
+      "props": {
+        "title": "Publications & Presentations"
+      },
+      "items": [
+        {
+          "id": "pub-dana-knox-2026",
+          "type": "Poster Presentation",
+          "title": "Fracture Mechanics of Rare-Earth Permanent Magnets",
+          "authors": "Tareq Bin Taher and Dr. Xing Liu",
+          "venue": "2026 Dana Knox Student Showcase Poster Session, New Jersey Institute of Technology",
+          "date": "April 8, 2026",
+          "link_url": "#case_studies"
+        }
+      ],
+      "item_layout": null
+    },
+    {
+      "type": "gallery",
+      "priority": "medium",
+      "layout": {
+        "type": "grid",
+        "direction": null,
+        "gap": "1rem",
+        "align": null,
+        "justify": null,
+        "width": null,
+        "max_width": null,
+        "margin": null,
+        "columns": {
+          "desktop": 3,
+          "mobile": 1
+        },
+        "slots": null,
+        "variant": "photo_grid",
+        "desktop": null,
+        "mobile": null
+      },
+      "props": {
+        "title": "Gallery",
+        "subtitle": null
+      },
+      "items": [
+        {
+          "id": "gallery-thanksgiving-dinner",
+          "title": "Thanksgiving Dinner",
+          "caption": "Thanksgiving dinner with Dr. Xing Liu and the group.",
+          "date": "2025-11-01",
+          "meta": "Paterson, NJ | Nov. 2025",
+          "image": "/images/thanksgiving-dinner.jpeg"
+        },
+        {
+          "id": "gallery-dana-knox-group",
+          "title": "Dana Knox Research Showcase",
+          "caption": "Group photo from the Dana Knox Research Showcase.",
+          "date": "2026-04-08",
+          "meta": "Newark, NJ | Apr. 2026",
+          "image": "/images/posters/group.jpg"
+        }
+      ],
+      "item_layout": null
+    },
+    {
+      "type": "cv",
+      "priority": "medium",
+      "layout": null,
+      "props": {
+        "title": "Curriculum Vitae",
+        "subtitle": null,
+        "cv_url": "/CV_Tareq_Bin_Taher.pdf"
+      },
+      "items": null,
+      "item_layout": null
     },
     {
       "type": "career_timeline",
@@ -713,75 +866,6 @@
       }
     },
     {
-      "type": "contact_booking",
-      "priority": "medium",
-      "layout": {
-        "type": "grid",
-        "direction": null,
-        "gap": "2rem",
-        "align": null,
-        "justify": null,
-        "width": null,
-        "max_width": null,
-        "margin": null,
-        "columns": {
-          "desktop": 2,
-          "mobile": 1
-        },
-        "slots": null,
-        "variant": "form_and_info",
-        "desktop": null,
-        "mobile": null
-      },
-      "props": {
-        "title": "Get In Touch",
-        "subtitle": "Interested in research collaboration, academic inquiries, or professional opportunities? I'd love to connect.",
-        "email": "tareqbintaher1@gmail.com",
-        "phone": null,
-        "location": "Newark, NJ, USA",
-        "calendar_url": null,
-        "social_links": [
-          {
-            "platform": "linkedin",
-            "url": "https://www.linkedin.com/in/tareq-bin-taher"
-          },
-          {
-            "platform": "email",
-            "url": "mailto:tb457@njit.edu"
-          }
-        ],
-        "form_fields": [
-          {
-            "name": "name",
-            "type": "text",
-            "label": "Your Name",
-            "required": true
-          },
-          {
-            "name": "email",
-            "type": "email",
-            "label": "Your Email",
-            "required": true
-          },
-          {
-            "name": "subject",
-            "type": "text",
-            "label": "Subject",
-            "required": false
-          },
-          {
-            "name": "message",
-            "type": "textarea",
-            "label": "Message",
-            "required": true
-          }
-        ],
-        "form_action": "mailto:tareqbintaher1@gmail.com"
-      },
-      "items": null,
-      "item_layout": null
-    },
-    {
       "type": "footer",
       "priority": null,
       "layout": {
@@ -825,6 +909,7 @@
       "props": {
         "logo": "",
         "name": "Tareq Bin Taher",
+        "contact_email": "tareqbintaher1@gmail.com",
         "links": [
           {
             "label": "LinkedIn",

@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react'
-
-function getColors(theme) {
-  const palette = theme?.colorPalette ?? theme?.color_palette ?? []
-  return {
-    primary: palette[0] || '#1917fc',
-    secondary: palette[1] || '#134331',
-    accent: palette[2] || '#ed2f25',
-  }
-}
+import { getThemeColors } from '../theme'
+import { CONTENT_MAX_WIDTH } from '../theme'
 
 export default function Navbar({ section, theme }) {
   const layout = section?.layout || {}
@@ -15,15 +8,15 @@ export default function Navbar({ section, theme }) {
   const mobileLayout = layout?.mobile || {}
   const props = section?.props || {}
   const slots = desktopLayout?.slots || {}
-  const { primary, secondary, accent } = getColors(theme)
+  const { background, primary, secondary, accent, divider } = getThemeColors(theme)
 
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMenuCollapsed, setIsMenuCollapsed] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768)
-      if (window.innerWidth >= 768) setIsOpen(false)
+      setIsMenuCollapsed(window.innerWidth < 1180)
+      if (window.innerWidth >= 1180) setIsOpen(false)
     }
     handleResize()
     window.addEventListener('resize', handleResize)
@@ -33,11 +26,11 @@ export default function Navbar({ section, theme }) {
   const ctaLabel = props.cta_label ?? props.ctaLabel ?? props.CTA
   const ctaUrl = props.cta_url ?? props.ctaUrl
 
-  const activeLayout = isMobile ? mobileLayout : desktopLayout
+  const activeLayout = isMenuCollapsed ? mobileLayout : desktopLayout
 
   const navOuterStyle = {
     width: '100%',
-    borderBottom: `1px solid ${secondary}`,
+    borderBottom: `1px solid ${divider}`,
     position: 'relative',
   }
 
@@ -47,7 +40,7 @@ export default function Navbar({ section, theme }) {
     alignItems: activeLayout?.align ?? 'center',
     gap: activeLayout?.gap ?? '2rem',
     width: '100%',
-    maxWidth: 1100,
+    maxWidth: CONTENT_MAX_WIDTH,
     margin: '0 auto',
     padding: '1rem 1.5rem',
     position: 'relative',
@@ -65,12 +58,26 @@ export default function Navbar({ section, theme }) {
         ) : null
       case 'links':
         return (props.links || []).length ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: isMenuCollapsed ? 'column' : 'row',
+              alignItems: isMenuCollapsed ? 'stretch' : 'center',
+              gap: isMenuCollapsed ? '0.35rem' : '1.5rem',
+            }}
+          >
             {(props.links || []).map((link, idx) => (
               <a
                 key={idx}
                 href={link.url || '#'}
-                style={{ fontSize: '0.875rem', color: primary, transition: 'color 0.2s' }}
+                onClick={() => setIsOpen(false)}
+                style={{
+                  fontSize: '0.875rem',
+                  color: primary,
+                  transition: 'color 0.2s',
+                  padding: isMenuCollapsed ? '0.55rem 0' : 0,
+                  borderBottom: isMenuCollapsed ? `1px solid ${divider}` : 'none',
+                }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = accent)}
                 onMouseLeave={(e) => (e.currentTarget.style.color = primary)}
               >
@@ -83,14 +90,17 @@ export default function Navbar({ section, theme }) {
         return ctaLabel ? (
           <a href={ctaUrl || '#'} target="_blank" rel="noreferrer">
             <button
+              onClick={() => setIsOpen(false)}
               style={{
-                backgroundColor: primary,
+                backgroundColor: accent,
                 color: '#fff',
                 border: 'none',
                 borderRadius: 6,
                 padding: '0.5rem 1rem',
                 fontSize: '0.875rem',
+                fontWeight: 700,
                 cursor: 'pointer',
+                width: isMenuCollapsed ? '100%' : 'auto',
               }}
             >
               {ctaLabel}
@@ -121,23 +131,30 @@ export default function Navbar({ section, theme }) {
         </div>
 
         {/* Desktop right */}
-        {!isMobile && (
+        {!isMenuCollapsed && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
             {renderSlotGroup(slots?.right)}
           </div>
         )}
 
-        {/* Mobile hamburger */}
-        {isMobile && (
+        {/* Collapsible menu button */}
+        {isMenuCollapsed && (
           <button
             onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={isOpen}
             style={{
               marginLeft: 'auto',
-              background: 'none',
+              background: accent,
               border: 'none',
+              borderRadius: 8,
               cursor: 'pointer',
-              padding: 8,
-              color: primary,
+              padding: 9,
+              color: '#fff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: `0 4px 12px ${accent}30`,
             }}
           >
             {isOpen ? (
@@ -155,19 +172,22 @@ export default function Navbar({ section, theme }) {
           </button>
         )}
 
-        {/* Mobile dropdown */}
-        {isMobile && isOpen && (
+        {/* Collapsible dropdown */}
+        {isMenuCollapsed && isOpen && (
           <div
             style={{
               position: 'absolute',
               left: 0,
               top: '100%',
               width: '100%',
-              background: '#fafafa',
+              background: background,
               padding: '1rem 1.5rem',
-              borderBottom: `1px solid ${secondary}`,
+              borderBottom: `1px solid ${divider}`,
               boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
               zIndex: 50,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.85rem',
             }}
           >
             {renderSlotGroup(slots?.right)}

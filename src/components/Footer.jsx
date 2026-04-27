@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from 'react'
-
-function getColors(theme) {
-  const palette = theme?.colorPalette ?? theme?.color_palette ?? []
-  return {
-    primary: palette[0] || '#1917fc',
-    secondary: palette[1] || '#134331',
-    accent: palette[2] || '#ed2f25',
-  }
-}
+import { getThemeColors } from '../theme'
+import { CONTENT_MAX_WIDTH } from '../theme'
 
 export default function Footer({ section, theme }) {
   const layout = section?.layout || {}
   const props = section?.props || {}
   const slots = layout?.slots || {}
-  const { primary, secondary, accent } = getColors(theme)
+  const { primary, secondary, accent, divider, surface } = getThemeColors(theme)
 
   const [isMobile, setIsMobile] = useState(false)
 
@@ -31,7 +24,8 @@ export default function Footer({ section, theme }) {
   const footerOuterStyle = {
     width: '100%',
     marginTop: 'auto',
-    borderTop: `1px solid ${secondary}`,
+    borderTop: `1px solid ${divider}`,
+    backgroundColor: surface,
   }
 
   const footerInnerStyle = {
@@ -40,7 +34,7 @@ export default function Footer({ section, theme }) {
     gap: layout?.gap ?? '2rem',
     padding: '2rem 1.5rem',
     width: '100%',
-    maxWidth: 1100,
+    maxWidth: CONTENT_MAX_WIDTH,
     margin: '0 auto',
     textAlign: isMobile ? 'center' : 'left',
   }
@@ -102,6 +96,14 @@ export default function Footer({ section, theme }) {
           <p style={{ margin: 0, fontSize: '0.875rem', color: secondary }}>
             © {new Date().getFullYear()} All rights reserved.
           </p>
+          {props.contact_email && (
+            <p id="contact_booking" style={{ margin: '0.35rem 0 0', fontSize: '0.875rem', color: secondary }}>
+              Contact:{' '}
+              <a href={`mailto:${props.contact_email}`} style={{ color: primary, fontWeight: 700, textDecoration: 'none' }}>
+                {props.contact_email}
+              </a>
+            </p>
+          )}
         </div>
 
         {/* Right */}
@@ -120,10 +122,10 @@ export default function Footer({ section, theme }) {
         <div
           style={{
             width: '100%',
-            maxWidth: 1100,
+            maxWidth: CONTENT_MAX_WIDTH,
             margin: '0 auto',
             padding: '1rem 1.5rem',
-            borderTop: `1px solid ${secondary}`,
+            borderTop: `1px solid ${divider}`,
             textAlign: 'center',
             fontSize: '0.8rem',
             color: secondary,

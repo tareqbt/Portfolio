@@ -1,14 +1,7 @@
 import React from 'react'
 import SectionHeader from './SectionHeader'
-
-function getColors(theme) {
-  const palette = theme?.colorPalette ?? theme?.color_palette ?? []
-  return {
-    primary: palette[0] || '#1917fc',
-    secondary: palette[1] || '#134331',
-    accent: palette[2] || '#ed2f25',
-  }
-}
+import { getThemeColors } from '../theme'
+import { CONTENT_MAX_WIDTH } from '../theme'
 
 const CATEGORY_EMOJI = {
   certification: '🏆',
@@ -31,15 +24,16 @@ function AchievementIcon({ item, primary }) {
   )
 }
 
-function BadgeCard({ item, primary, secondary, accent }) {
+function BadgeCard({ item, primary, secondary, accent, divider, background }) {
   return (
     <div style={{
       display: 'flex', alignItems: 'flex-start', gap: '0.875rem',
-      border: `2px solid ${secondary}20`, borderRadius: 10, padding: '1rem',
+      border: `2px solid ${divider}`, borderRadius: 10, padding: '1rem',
+      backgroundColor: background,
       transition: 'border-color 0.2s ease',
     }}
-      onMouseEnter={(e) => { e.currentTarget.style.borderColor = `${primary}40`; e.currentTarget.style.backgroundColor = `${primary}05` }}
-      onMouseLeave={(e) => { e.currentTarget.style.borderColor = `${secondary}20`; e.currentTarget.style.backgroundColor = 'transparent' }}
+      onMouseEnter={(e) => { e.currentTarget.style.borderColor = accent }}
+      onMouseLeave={(e) => { e.currentTarget.style.borderColor = divider }}
     >
       <AchievementIcon item={item} primary={primary} />
       <div style={{ flex: 1, minWidth: 0 }}>
@@ -59,11 +53,11 @@ function BadgeCard({ item, primary, secondary, accent }) {
 
 /* ── badges variant ────────────────────────────── */
 
-function AchievementsBadges({ items, primary, secondary, accent }) {
+function AchievementsBadges({ items, primary, secondary, accent, divider, background }) {
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1rem' }}>
       {items.map((item, idx) => (
-        <BadgeCard key={item.id || idx} item={item} primary={primary} secondary={secondary} accent={accent} />
+        <BadgeCard key={item.id || idx} item={item} primary={primary} secondary={secondary} accent={accent} divider={divider} background={background} />
       ))}
     </div>
   )
@@ -71,16 +65,16 @@ function AchievementsBadges({ items, primary, secondary, accent }) {
 
 /* ── timeline variant ──────────────────────────── */
 
-function AchievementsTimeline({ items, primary, secondary, accent }) {
+function AchievementsTimeline({ items, primary, secondary, accent, divider }) {
   return (
     <ul style={{ listStyle: 'none', padding: 0, margin: 0, position: 'relative' }}>
-      <div style={{ position: 'absolute', left: 87, top: 8, bottom: 8, width: 2, backgroundColor: `${primary}20` }} />
+      <div style={{ position: 'absolute', left: 87, top: 8, bottom: 8, width: 2, backgroundColor: divider }} />
       {items.map((item, idx) => (
         <li key={item.id || idx} style={{ display: 'flex', gap: '1.5rem', marginBottom: idx < items.length - 1 ? '2rem' : 0, position: 'relative' }}>
           <div style={{ width: 80, textAlign: 'right', color: primary, fontWeight: 700, fontSize: '0.8rem', paddingTop: 2, flexShrink: 0 }}>
             {item.date || ''}
           </div>
-          <div style={{ width: 16, height: 16, borderRadius: '50%', backgroundColor: accent, border: `3px solid ${primary}`, flexShrink: 0, marginTop: 2, zIndex: 1 }} />
+          <div style={{ width: 16, height: 16, borderRadius: '50%', backgroundColor: accent, border: `3px solid #fff`, flexShrink: 0, marginTop: 2, zIndex: 1 }} />
           <div style={{ flex: 1 }}>
             <div style={{ fontWeight: 700, fontSize: '0.875rem', color: primary, marginBottom: '0.1rem' }}>{item.title}</div>
             {item.issuer && <div style={{ fontSize: '0.75rem', fontWeight: 600, color: accent, marginBottom: '0.1rem' }}>{item.issuer}</div>}
@@ -100,7 +94,7 @@ function AchievementsTimeline({ items, primary, secondary, accent }) {
 
 /* ── grouped variant ───────────────────────────── */
 
-function AchievementsGrouped({ items, primary, secondary, accent }) {
+function AchievementsGrouped({ items, primary, secondary, accent, divider, background }) {
   const groups = items.reduce((acc, item) => {
     const key = item.category || 'other'
     if (!acc[key]) acc[key] = []
@@ -121,7 +115,7 @@ function AchievementsGrouped({ items, primary, secondary, accent }) {
           </h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '0.75rem' }}>
             {groupItems.map((item, idx) => (
-              <BadgeCard key={item.id || idx} item={item} primary={primary} secondary={secondary} accent={accent} />
+              <BadgeCard key={item.id || idx} item={item} primary={primary} secondary={secondary} accent={accent} divider={divider} background={background} />
             ))}
           </div>
         </div>
@@ -133,23 +127,23 @@ function AchievementsGrouped({ items, primary, secondary, accent }) {
 /* ── main export ───────────────────────────────── */
 
 export default function Achievements({ section, theme }) {
-  const { primary, secondary, accent } = getColors(theme)
+  const { primary, secondary, accent, divider, background } = getThemeColors(theme)
   const items = section?.items || []
   const variant = section?.layout?.variant || 'badges'
   const title = section?.props?.title || 'Achievements & Certifications'
 
   return (
     <section id="achievements" style={{ width: '100%', padding: '4rem 1.5rem' }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: '0 auto' }}>
       <SectionHeader label="ACHIEVEMENTS" heading={title} description={section?.description} primary={primary} accent={accent} />
       {items.length === 0 ? (
         <p style={{ color: secondary, opacity: 0.6 }}>No achievements listed.</p>
       ) : variant === 'timeline' ? (
-        <AchievementsTimeline items={items} primary={primary} secondary={secondary} accent={accent} />
+        <AchievementsTimeline items={items} primary={primary} secondary={secondary} accent={accent} divider={divider} />
       ) : variant === 'grouped' ? (
-        <AchievementsGrouped items={items} primary={primary} secondary={secondary} accent={accent} />
+        <AchievementsGrouped items={items} primary={primary} secondary={secondary} accent={accent} divider={divider} background={background} />
       ) : (
-        <AchievementsBadges items={items} primary={primary} secondary={secondary} accent={accent} />
+        <AchievementsBadges items={items} primary={primary} secondary={secondary} accent={accent} divider={divider} background={background} />
       )}
       </div>
     </section>

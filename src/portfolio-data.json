@@ -7,7 +7,7 @@
   },
   "theme": {
     "style": "modern-clean",
-    "color_palette": ["#FFFFFF", "#111827", "#F3F4F6", "#E5E7EB", "#2563EB"],
+    "color_palette": ["#FFFFFF", "#111827", "#F3F4F6", "#E5E7EB", "#1B3A5C"],
     "font": "sans",
     "tone": "professional-academic",
     "max_width": "1440px",

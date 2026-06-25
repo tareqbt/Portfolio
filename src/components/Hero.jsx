@@ -38,12 +38,11 @@ export default function Hero({ section, theme }) {
               <h1
                 style={{
                   color: primary,
-                  fontFamily: 'Georgia, Times New Roman, serif',
-                  fontSize: isMobile ? '3rem' : '5.25rem',
+                  fontSize: isMobile ? '2.25rem' : '3.25rem',
                   fontWeight: 700,
-                  lineHeight: 1,
+                  lineHeight: 1.1,
                   margin: 0,
-                  letterSpacing: 0,
+                  letterSpacing: '-0.01em',
                 }}
               >
                 {p.name}
@@ -96,6 +95,17 @@ export default function Hero({ section, theme }) {
                   padding: '0.72rem 1.15rem',
                   fontSize: '0.9rem',
                   fontWeight: 800,
+                  transition: 'transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-1px)'
+                  e.currentTarget.style.boxShadow = `0 6px 16px ${accent}40`
+                  e.currentTarget.style.opacity = '0.92'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = 'none'
+                  e.currentTarget.style.opacity = '1'
                 }}
               >
                 {p.cta_label}
@@ -113,6 +123,15 @@ export default function Hero({ section, theme }) {
                     padding: '0.72rem 1.15rem',
                     fontSize: '0.9rem',
                     fontWeight: 800,
+                    transition: 'border-color 0.15s ease, transform 0.15s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = accent
+                    e.currentTarget.style.transform = 'translateY(-1px)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = divider
+                    e.currentTarget.style.transform = 'translateY(0)'
                   }}
                 >
                   {p.secondary_cta_label}
@@ -131,6 +150,15 @@ export default function Hero({ section, theme }) {
                     padding: '0.72rem 1.15rem',
                     fontSize: '0.9rem',
                     fontWeight: 800,
+                    transition: 'border-color 0.15s ease, transform 0.15s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = accent
+                    e.currentTarget.style.transform = 'translateY(-1px)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = divider
+                    e.currentTarget.style.transform = 'translateY(0)'
                   }}
                 >
                   {p.tertiary_cta_label}
@@ -160,7 +188,6 @@ export default function Hero({ section, theme }) {
                 overflow: 'hidden',
                 borderRadius: 6,
                 border: `1px solid ${divider}`,
-                boxShadow: '0 12px 28px rgba(17,24,39,0.10)',
                 backgroundColor: background,
               }}
             >

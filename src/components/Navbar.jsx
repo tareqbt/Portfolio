@@ -15,8 +15,8 @@ export default function Navbar({ section, theme }) {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMenuCollapsed(window.innerWidth < 1180)
-      if (window.innerWidth >= 1180) setIsOpen(false)
+      setIsMenuCollapsed(window.innerWidth < 860)
+      if (window.innerWidth >= 860) setIsOpen(false)
     }
     handleResize()
     window.addEventListener('resize', handleResize)

@@ -3,7 +3,7 @@ import { getThemeColors } from '../theme'
 import { CONTENT_MAX_WIDTH } from '../theme'
 
 export default function Hero({ section, theme }) {
-  const { layout, props = {} } = section
+  const { props = {} } = section
   const { background, primary, secondary, accent, divider } = getThemeColors(theme)
 
   const [isMobile, setIsMobile] = useState(false)
@@ -18,19 +18,6 @@ export default function Hero({ section, theme }) {
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
-
-  const activeLayout = isMobile ? layout?.mobile : layout?.desktop
-  const contentSlots = layout?.desktop?.slots || {}
-  const isGrid = activeLayout?.type === 'grid'
-
-  const containerStyle = {
-    display: isGrid ? 'grid' : 'flex',
-    gridTemplateColumns: isGrid ? 'minmax(0, 1.45fr) minmax(280px, 0.55fr)' : undefined,
-    flexDirection: isGrid ? undefined : 'column',
-    gap: isMobile ? '2rem' : '5.5rem',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  }
 
   const renderSlotItem = (slotName) => {
     const p = props || {}
@@ -236,14 +223,11 @@ export default function Hero({ section, theme }) {
     }
   }
 
-  const renderSlotContent = (slotData) => {
-    if (!slotData) return null
-    const items = Array.isArray(slotData) ? slotData : [slotData]
-    return items.map((item, idx) => {
-      const key = typeof item === 'string' ? item : item.name
-      return <div key={idx}>{renderSlotItem(key)}</div>
-    })
-  }
+  const researchAreas = [
+    'Fracture mechanics',
+    'Multiphysics simulation',
+    'Magneto-mechanical modeling',
+  ]
 
   if (isMobile) {
     const p = props || {}
@@ -372,27 +356,262 @@ export default function Hero({ section, theme }) {
     )
   }
 
+  const p = props || {}
+  const affiliationLine = [p.lab_name, p.institution].filter(Boolean).join(', ')
+
   return (
-    <section id="hero" style={{ width: '100%', padding: isMobile ? '3rem 1rem 3.5rem' : '7.5rem 1.5rem 7rem', backgroundColor: background, borderBottom: `1px solid ${divider}` }}>
+    <section
+      id="hero"
+      style={{
+        width: '100%',
+        padding: '6.4rem 1.5rem 6.2rem',
+        backgroundColor: background,
+        borderBottom: `1px solid ${divider}`,
+      }}
+    >
       <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: '0 auto' }}>
-        <div style={containerStyle}>
-          {/* Left */}
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              textAlign: 'left',
-              width: '100%',
-            }}
-          >
-            {renderSlotContent(contentSlots.left)}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'minmax(0, 1fr) minmax(300px, 380px)',
+            gap: '4.5rem',
+            alignItems: 'center',
+          }}
+        >
+          <div style={{ maxWidth: 820 }}>
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.55rem',
+                border: `1px solid ${divider}`,
+                borderRadius: 999,
+                padding: '0.38rem 0.7rem',
+                color: secondary,
+                fontSize: '0.78rem',
+                fontWeight: 800,
+                lineHeight: 1,
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+              }}
+            >
+              <span
+                aria-hidden="true"
+                style={{
+                  width: 7,
+                  height: 7,
+                  borderRadius: 999,
+                  backgroundColor: accent,
+                  display: 'inline-block',
+                }}
+              />
+              Computational Mechanics
+            </div>
+
+            {p.name && (
+              <h1
+                style={{
+                  color: primary,
+                  fontSize: '3.35rem',
+                  fontWeight: 800,
+                  lineHeight: 1.04,
+                  margin: '1.1rem 0 0',
+                }}
+              >
+                {p.name}
+              </h1>
+            )}
+
+            <p
+              style={{
+                color: primary,
+                fontSize: '1.48rem',
+                fontWeight: 800,
+                lineHeight: 1.28,
+                margin: '1rem 0 0',
+                maxWidth: 760,
+              }}
+            >
+              Computational fracture mechanics for magnetically active materials.
+            </p>
+
+            {p.hero_text && (
+              <p
+                style={{
+                  color: secondary,
+                  opacity: 0.9,
+                  fontSize: '1.03rem',
+                  lineHeight: 1.78,
+                  margin: '1.25rem 0 0',
+                  maxWidth: 790,
+                }}
+              >
+                {p.hero_text}
+              </p>
+            )}
+
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+                gap: '0.75rem',
+                marginTop: '1.55rem',
+                maxWidth: 790,
+              }}
+            >
+              {[
+                ['Role', p.role],
+                ['Institution', p.institution],
+                ['PI', p.pi],
+              ].filter(([, value]) => value).map(([label, value]) => (
+                <div
+                  key={label}
+                  style={{
+                    borderTop: `2px solid ${accent}`,
+                    paddingTop: '0.65rem',
+                    minWidth: 0,
+                  }}
+                >
+                  <div style={{ color: secondary, opacity: 0.72, fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                    {label}
+                  </div>
+                  <div style={{ color: primary, fontSize: '0.9rem', fontWeight: 800, lineHeight: 1.35, marginTop: '0.25rem' }}>
+                    {value}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem', marginTop: '1.35rem' }}>
+              {researchAreas.map((area) => (
+                <span
+                  key={area}
+                  style={{
+                    border: `1px solid ${divider}`,
+                    borderRadius: 999,
+                    color: secondary,
+                    fontSize: '0.8rem',
+                    fontWeight: 800,
+                    padding: '0.42rem 0.68rem',
+                    lineHeight: 1,
+                  }}
+                >
+                  {area}
+                </span>
+              ))}
+            </div>
+
+            <div style={{ display: 'flex', gap: '0.7rem', flexWrap: 'wrap', marginTop: '1.6rem' }}>
+              {p.cta_label && (
+                <a href={p.cta_url || '#'} style={{ display: 'inline-block', textDecoration: 'none' }}>
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      backgroundColor: accent,
+                      color: '#fff',
+                      border: `1px solid ${accent}`,
+                      borderRadius: 6,
+                      padding: '0.78rem 1.15rem',
+                      fontSize: '0.9rem',
+                      fontWeight: 800,
+                    }}
+                  >
+                    {p.cta_label}
+                  </span>
+                </a>
+              )}
+              <a href="/CV_Tareq_Bin_Taher.pdf" target="_blank" rel="noreferrer" style={{ display: 'inline-block', textDecoration: 'none' }}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    backgroundColor: background,
+                    color: primary,
+                    border: `1px solid ${divider}`,
+                    borderRadius: 6,
+                    padding: '0.78rem 1.15rem',
+                    fontSize: '0.9rem',
+                    fontWeight: 800,
+                  }}
+                >
+                  CV
+                </span>
+              </a>
+              {p.tertiary_cta_label && (
+                <a href={p.tertiary_cta_url || '#'} style={{ display: 'inline-block', textDecoration: 'none' }}>
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      backgroundColor: background,
+                      color: primary,
+                      border: `1px solid ${divider}`,
+                      borderRadius: 6,
+                      padding: '0.78rem 1.15rem',
+                      fontSize: '0.9rem',
+                      fontWeight: 800,
+                    }}
+                  >
+                    {p.tertiary_cta_label}
+                  </span>
+                </a>
+              )}
+            </div>
           </div>
 
-          {/* Right */}
-          <div style={{ display: 'flex', justifyContent: isMobile ? 'flex-start' : 'flex-end', width: '100%' }}>
-            {renderSlotContent(contentSlots.right)}
-          </div>
+          <aside style={{ width: '100%', justifySelf: 'end' }} aria-label="Research profile summary">
+            {p.image && (
+              <div
+                style={{
+                  width: '100%',
+                  aspectRatio: '4 / 5',
+                  overflow: 'hidden',
+                  borderRadius: 8,
+                  border: `1px solid ${divider}`,
+                  backgroundColor: background,
+                }}
+              >
+                <img
+                  src={p.image}
+                  alt={p.name || 'profile portrait'}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center 18%',
+                    display: 'block',
+                  }}
+                />
+              </div>
+            )}
+
+            <div
+              style={{
+                borderLeft: `3px solid ${accent}`,
+                marginTop: '1rem',
+                paddingLeft: '0.95rem',
+              }}
+            >
+              <div style={{ color: primary, fontSize: '0.92rem', fontWeight: 800, lineHeight: 1.35 }}>
+                Current Research
+              </div>
+              <p style={{ color: secondary, opacity: 0.86, fontSize: '0.88rem', lineHeight: 1.58, margin: '0.35rem 0 0' }}>
+                {p.current_project || 'Computational fracture mechanics and multiphysics modeling'}
+              </p>
+            </div>
+
+            {affiliationLine && (
+              <p style={{ color: secondary, opacity: 0.76, fontSize: '0.82rem', lineHeight: 1.55, margin: '1rem 0 0' }}>
+                {p.lab_name && p.lab_url ? (
+                  <a href={p.lab_url} target="_blank" rel="noreferrer" style={{ color: primary, fontWeight: 800 }}>
+                    {p.lab_name}
+                  </a>
+                ) : (
+                  p.lab_name
+                )}
+                {p.lab_name && p.institution ? ', ' : ''}
+                {p.institution}
+              </p>
+            )}
+          </aside>
         </div>
       </div>
     </section>

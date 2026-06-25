@@ -42,12 +42,13 @@ export default function Navbar({ section, theme }) {
   const navOuterStyle = {
     width: '100%',
     borderBottom: `1px solid ${divider}`,
-    position: 'sticky',
-    top: 0,
+    position: isMenuCollapsed ? 'sticky' : 'relative',
+    top: isMenuCollapsed ? 0 : 'auto',
     backgroundColor: isMenuCollapsed ? 'rgba(255,255,255,0.96)' : background,
     backdropFilter: isMenuCollapsed ? 'saturate(160%) blur(14px)' : 'none',
-    zIndex: 200,
+    zIndex: isMenuCollapsed ? 200 : 1,
     boxShadow: isOpen ? '0 12px 28px rgba(17,24,39,0.08)' : 'none',
+    transition: 'box-shadow 0.2s ease, background-color 0.2s ease',
   }
 
   const navInnerStyle = {

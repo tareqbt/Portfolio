@@ -7,9 +7,13 @@ export default function Hero({ section, theme }) {
   const { background, primary, secondary, accent, divider } = getThemeColors(theme)
 
   const [isMobile, setIsMobile] = useState(false)
+  const [isSmallMobile, setIsSmallMobile] = useState(false)
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+      setIsSmallMobile(window.innerWidth < 480)
+    }
     handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
@@ -23,7 +27,7 @@ export default function Hero({ section, theme }) {
     display: isGrid ? 'grid' : 'flex',
     gridTemplateColumns: isGrid ? 'minmax(0, 1.45fr) minmax(280px, 0.55fr)' : undefined,
     flexDirection: isGrid ? undefined : 'column',
-    gap: isMobile ? '3rem' : '5.5rem',
+    gap: isMobile ? '2rem' : '5.5rem',
     alignItems: 'center',
     justifyContent: 'space-between',
   }
@@ -38,18 +42,17 @@ export default function Hero({ section, theme }) {
               <h1
                 style={{
                   color: primary,
-                  fontSize: isMobile ? '2.25rem' : '3.25rem',
+                  fontSize: isMobile ? (isSmallMobile ? '2rem' : '2.35rem') : '3.25rem',
                   fontWeight: 700,
-                  lineHeight: 1.1,
+                  lineHeight: isMobile ? 1.08 : 1.1,
                   margin: 0,
-                  letterSpacing: '-0.01em',
                 }}
               >
                 {p.name}
               </h1>
             )}
             {p.role && (
-              <p style={{ margin: '1rem 0 0 0', color: primary, fontSize: '1.18rem', fontWeight: 700, lineHeight: 1.35 }}>
+              <p style={{ margin: isMobile ? '0.85rem 0 0 0' : '1rem 0 0 0', color: primary, fontSize: isMobile ? '1.05rem' : '1.18rem', fontWeight: 700, lineHeight: 1.35 }}>
                 {p.role}
               </p>
             )}
@@ -77,17 +80,18 @@ export default function Hero({ section, theme }) {
               </p>
             )}
             {p.hero_text && (
-              <p style={{ margin: '1.55rem 0 0 0', color: secondary, opacity: 0.86, lineHeight: 1.8, fontSize: isMobile ? '1.03rem' : '1.12rem', maxWidth: 780 }}>{p.hero_text}</p>
+              <p style={{ margin: isMobile ? '1.15rem 0 0 0' : '1.55rem 0 0 0', color: secondary, opacity: 0.86, lineHeight: isMobile ? 1.68 : 1.8, fontSize: isMobile ? '0.98rem' : '1.12rem', maxWidth: 780 }}>{p.hero_text}</p>
             )}
           </div>
         )
       case 'cta':
         return p.cta_label ? (
-          <div style={{ display: 'flex', gap: '0.7rem', flexWrap: 'wrap', justifyContent: isMobile ? 'center' : 'flex-start', marginTop: '1.5rem' }}>
-            <a href={p.cta_url || '#'} style={{ display: 'inline-block', textDecoration: 'none' }}>
+          <div style={{ display: 'flex', gap: '0.7rem', flexWrap: 'wrap', justifyContent: isMobile ? 'stretch' : 'flex-start', marginTop: isMobile ? '1.25rem' : '1.5rem', width: '100%' }}>
+            <a href={p.cta_url || '#'} style={{ display: 'inline-block', textDecoration: 'none', flex: isMobile ? '1 1 140px' : '0 0 auto' }}>
               <span
                 style={{
                   display: 'inline-block',
+                  width: isMobile ? '100%' : 'auto',
                   backgroundColor: accent,
                   color: '#fff',
                   border: `1px solid ${accent}`,
@@ -95,6 +99,7 @@ export default function Hero({ section, theme }) {
                   padding: '0.72rem 1.15rem',
                   fontSize: '0.9rem',
                   fontWeight: 800,
+                  textAlign: 'center',
                   transition: 'transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease',
                 }}
                 onMouseEnter={(e) => {
@@ -112,10 +117,11 @@ export default function Hero({ section, theme }) {
               </span>
             </a>
             {p.secondary_cta_label && (
-              <a href={p.secondary_cta_url || '#'} style={{ display: 'inline-block', textDecoration: 'none' }}>
+              <a href={p.secondary_cta_url || '#'} style={{ display: 'inline-block', textDecoration: 'none', flex: isMobile ? '1 1 140px' : '0 0 auto' }}>
                 <span
                   style={{
                     display: 'inline-block',
+                    width: isMobile ? '100%' : 'auto',
                     backgroundColor: background,
                     color: primary,
                     border: `1px solid ${divider}`,
@@ -123,6 +129,7 @@ export default function Hero({ section, theme }) {
                     padding: '0.72rem 1.15rem',
                     fontSize: '0.9rem',
                     fontWeight: 800,
+                    textAlign: 'center',
                     transition: 'border-color 0.15s ease, transform 0.15s ease',
                   }}
                   onMouseEnter={(e) => {
@@ -139,10 +146,11 @@ export default function Hero({ section, theme }) {
               </a>
             )}
             {p.tertiary_cta_label && (
-              <a href={p.tertiary_cta_url || '#'} style={{ display: 'inline-block', textDecoration: 'none' }}>
+              <a href={p.tertiary_cta_url || '#'} style={{ display: 'inline-block', textDecoration: 'none', flex: isMobile ? '1 1 140px' : '0 0 auto' }}>
                 <span
                   style={{
                     display: 'inline-block',
+                    width: isMobile ? '100%' : 'auto',
                     backgroundColor: background,
                     color: primary,
                     border: `1px solid ${divider}`,
@@ -150,6 +158,7 @@ export default function Hero({ section, theme }) {
                     padding: '0.72rem 1.15rem',
                     fontSize: '0.9rem',
                     fontWeight: 800,
+                    textAlign: 'center',
                     transition: 'border-color 0.15s ease, transform 0.15s ease',
                   }}
                   onMouseEnter={(e) => {
@@ -169,7 +178,7 @@ export default function Hero({ section, theme }) {
         ) : null
       case 'image': {
         if (!p.image) return null
-        const imageMaxWidth = isMobile ? '280px' : '360px'
+        const imageMaxWidth = isMobile ? (isSmallMobile ? '220px' : '260px') : '360px'
         const imageAspectRatio = '1 / 1'
         return (
           <div
@@ -203,7 +212,7 @@ export default function Hero({ section, theme }) {
                   borderLeft: `3px solid ${accent}`,
                   paddingLeft: '0.85rem',
                   color: secondary,
-                  fontSize: '0.82rem',
+                  fontSize: isMobile ? '0.78rem' : '0.82rem',
                   lineHeight: 1.55,
                   textAlign: 'left',
                 }}
@@ -230,7 +239,7 @@ export default function Hero({ section, theme }) {
   }
 
   return (
-    <section id="hero" style={{ width: '100%', padding: isMobile ? '4.5rem 1.5rem 5rem' : '7.5rem 1.5rem 7rem', backgroundColor: background, borderBottom: `1px solid ${divider}` }}>
+    <section id="hero" style={{ width: '100%', padding: isMobile ? '3rem 1rem 3.5rem' : '7.5rem 1.5rem 7rem', backgroundColor: background, borderBottom: `1px solid ${divider}` }}>
       <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: '0 auto' }}>
         <div style={containerStyle}>
           {/* Left */}
@@ -238,15 +247,16 @@ export default function Hero({ section, theme }) {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              alignItems: isMobile ? 'center' : 'flex-start',
-              textAlign: isMobile ? 'center' : 'left',
+              alignItems: 'flex-start',
+              textAlign: 'left',
+              width: '100%',
             }}
           >
             {renderSlotContent(contentSlots.left)}
           </div>
 
           {/* Right */}
-          <div style={{ display: 'flex', justifyContent: isMobile ? 'center' : 'flex-end', width: '100%' }}>
+          <div style={{ display: 'flex', justifyContent: isMobile ? 'flex-start' : 'flex-end', width: '100%' }}>
             {renderSlotContent(contentSlots.right)}
           </div>
         </div>

@@ -4,7 +4,7 @@ export default function SectionHeader({ label, heading, description, primary, ac
   const showLabel = label && label.toLowerCase() !== String(heading || '').toLowerCase()
 
   return (
-    <div style={{ marginBottom: description ? '1.5rem' : '2rem' }}>
+    <div style={{ marginBottom: description ? '1.25rem' : '1.75rem' }}>
       {showLabel && (
         <p style={{
           fontSize: '0.75rem',
@@ -18,10 +18,10 @@ export default function SectionHeader({ label, heading, description, primary, ac
         </p>
       )}
       <h2 style={{
-        fontSize: '2.25rem',
+        fontSize: 'clamp(1.55rem, 7vw, 2.25rem)',
         fontWeight: 800,
         color: primary,
-        margin: description ? '0 0 0.6rem' : '0 0 2rem',
+        margin: description ? '0 0 0.6rem' : '0 0 1.75rem',
         lineHeight: 1.15,
       }}>
         {heading}

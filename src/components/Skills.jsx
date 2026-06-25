@@ -8,19 +8,21 @@ export default function Skills({ section, theme }) {
   const items = section?.items || []
   const { primary, secondary, accent, divider, background } = getThemeColors(theme)
 
-  const [isMobile, setIsMobile] = useState(false)
+  const [viewportWidth, setViewportWidth] = useState(1024)
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    const handleResize = () => setViewportWidth(window.innerWidth)
     handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  const isMobile = viewportWidth < 768
+  const isSmallMobile = viewportWidth < 520
   const desktopCols = layout?.columns?.desktop || 5
   const mobileCols = layout?.columns?.mobile || 2
-  const activeCols = isMobile ? mobileCols : desktopCols
-  const gap = layout?.gap || '1.5rem'
+  const activeCols = isSmallMobile ? 1 : isMobile ? mobileCols : desktopCols
+  const gap = isMobile ? '0.75rem' : layout?.gap || '1.5rem'
   const cardWidth = `calc((100% - (${gap} * ${activeCols - 1})) / ${activeCols})`
   const categoryOrder = ['Simulation & Modeling', 'Programming & Computing', 'Engineering Tools', 'Research Methods']
   const groupedItems = items.reduce((groups, skill) => {
@@ -39,7 +41,7 @@ export default function Skills({ section, theme }) {
     flexWrap: 'wrap',
     gap,
     justifyContent: 'flex-start',
-    padding: '1rem 0 0',
+    padding: isMobile ? '0.75rem 0 0' : '1rem 0 0',
     width: '100%',
   }
 
@@ -47,12 +49,12 @@ export default function Skills({ section, theme }) {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    gap: '0.75rem',
-    padding: '0.85rem',
+    gap: isMobile ? '0.65rem' : '0.75rem',
+    padding: isMobile ? '0.75rem' : '0.85rem',
     border: `1px solid ${divider}`,
     backgroundColor: background,
     borderRadius: 8,
-    minWidth: isMobile ? 0 : 180,
+    minWidth: 0,
     transition: 'border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease',
     flexBasis: cardWidth,
     flexGrow: 0,
@@ -67,8 +69,8 @@ export default function Skills({ section, theme }) {
           alt=""
           style={{
             width: 'auto',
-            maxWidth: 86,
-            height: 34,
+            maxWidth: isMobile ? 72 : 86,
+            height: isMobile ? 30 : 34,
             maxHeight: 40,
             objectFit: 'contain',
             flexShrink: 0,
@@ -107,7 +109,7 @@ export default function Skills({ section, theme }) {
   }
 
   return (
-    <section id="skills" style={{ width: '100%', padding: '4rem 1.5rem' }}>
+    <section id="skills" style={{ width: '100%', padding: isMobile ? '3rem 1rem' : '4rem 1.5rem' }}>
       <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: '0 auto' }}>
       <SectionHeader label="SKILLS" heading="Skills" description={section?.description} primary={primary} accent={accent} />
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
@@ -134,7 +136,7 @@ export default function Skills({ section, theme }) {
                     }}
                   >
                     {renderIcon(skill)}
-                    <span style={{ fontSize: '0.95rem', fontWeight: 700, color: primary }}>
+                    <span style={{ fontSize: isMobile ? '0.9rem' : '0.95rem', fontWeight: 700, color: primary, minWidth: 0 }}>
                       {skill.name || 'Skill Name'}
                     </span>
                   </div>

@@ -32,6 +32,8 @@ export default function Navbar({ section, theme }) {
     width: '100%',
     borderBottom: `1px solid ${divider}`,
     position: 'relative',
+    backgroundColor: background,
+    zIndex: 100,
   }
 
   const navInnerStyle = {
@@ -42,7 +44,7 @@ export default function Navbar({ section, theme }) {
     width: '100%',
     maxWidth: CONTENT_MAX_WIDTH,
     margin: '0 auto',
-    padding: '1rem 1.5rem',
+    padding: isMenuCollapsed ? '0.75rem 1rem' : '1rem 1.5rem',
     position: 'relative',
   }
 
@@ -54,7 +56,20 @@ export default function Navbar({ section, theme }) {
         ) : null
       case 'name':
         return props.name ? (
-          <span style={{ fontSize: '1.125rem', fontWeight: 600, color: primary }}>{props.name}</span>
+          <span
+            style={{
+              display: 'block',
+              maxWidth: isMenuCollapsed ? 'min(58vw, 260px)' : 'none',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              fontSize: isMenuCollapsed ? '1rem' : '1.125rem',
+              fontWeight: 700,
+              color: primary,
+            }}
+          >
+            {props.name}
+          </span>
         ) : null
       case 'links':
         return (props.links || []).length ? (
@@ -77,7 +92,7 @@ export default function Navbar({ section, theme }) {
                   fontSize: '0.875rem',
                   color: primary,
                   transition: 'color 0.2s',
-                  padding: isMenuCollapsed ? '0.55rem 0' : 0,
+                  padding: isMenuCollapsed ? '0.72rem 0' : 0,
                   borderBottom: isMenuCollapsed ? `1px solid ${divider}` : 'none',
                 }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = accent)}
@@ -103,6 +118,7 @@ export default function Navbar({ section, theme }) {
                 fontWeight: 700,
                 cursor: 'pointer',
                 width: isMenuCollapsed ? '100%' : 'auto',
+                minHeight: isMenuCollapsed ? 42 : 'auto',
               }}
             >
               {ctaLabel}
@@ -152,6 +168,8 @@ export default function Navbar({ section, theme }) {
               borderRadius: 8,
               cursor: 'pointer',
               padding: 9,
+              width: 42,
+              height: 42,
               color: '#fff',
               display: 'flex',
               alignItems: 'center',
@@ -183,13 +201,15 @@ export default function Navbar({ section, theme }) {
               top: '100%',
               width: '100%',
               background: background,
-              padding: '1rem 1.5rem',
+              padding: '0.85rem 1rem 1rem',
               borderBottom: `1px solid ${divider}`,
               boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
               zIndex: 50,
               display: 'flex',
               flexDirection: 'column',
               gap: '0.85rem',
+              maxHeight: 'calc(100vh - 64px)',
+              overflowY: 'auto',
             }}
           >
             {renderSlotGroup(slots?.right)}

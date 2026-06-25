@@ -16,6 +16,7 @@ export default function Gallery({ section, theme }) {
   const [activeIndex, setActiveIndex] = useState(null)
   const activeImage = activeIndex === null ? null : sortedItems[activeIndex]
   const hasMultipleImages = sortedItems.length > 1
+  const [isMobile, setIsMobile] = useState(false)
 
   const closeImage = () => setActiveIndex(null)
   const showRelativeImage = (direction) => {
@@ -24,6 +25,13 @@ export default function Gallery({ section, theme }) {
       return (current + direction + sortedItems.length) % sortedItems.length
     })
   }
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 640)
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   useEffect(() => {
     if (activeIndex === null) return undefined
@@ -39,12 +47,12 @@ export default function Gallery({ section, theme }) {
   }, [activeIndex, sortedItems.length])
 
   return (
-    <section id="gallery" style={{ width: '100%', padding: '4rem 1.5rem', backgroundColor: surface }}>
+    <section id="gallery" style={{ width: '100%', padding: isMobile ? '3rem 1rem' : '4rem 1.5rem', backgroundColor: surface }}>
       <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: '0 auto' }}>
         <SectionHeader label="GALLERY" heading={title} description={subtitle} primary={primary} accent={accent} />
 
         {sortedItems.length > 0 ? (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(240px, 1fr))', gap: isMobile ? '0.85rem' : '1rem' }}>
             {sortedItems.map((item, idx) => (
               <button
                 key={item.id || idx}
@@ -134,17 +142,17 @@ export default function Gallery({ section, theme }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '1.5rem',
+            padding: isMobile ? '0.65rem' : '1.5rem',
           }}
         >
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              width: 'min(1000px, 96vw)',
-              height: 'min(760px, 92vh)',
+              width: isMobile ? '100%' : 'min(1000px, 96vw)',
+              height: isMobile ? 'min(720px, 94dvh)' : 'min(760px, 92vh)',
               backgroundColor: background,
               borderRadius: 8,
-              padding: '1rem',
+              padding: isMobile ? '0.75rem' : '1rem',
               display: 'flex',
               flexDirection: 'column',
               gap: '0.75rem',
@@ -164,8 +172,8 @@ export default function Gallery({ section, theme }) {
                 onClick={closeImage}
                 aria-label="Close gallery image"
                 style={{
-                  width: 36,
-                  height: 36,
+                  width: isMobile ? 40 : 36,
+                  height: isMobile ? 40 : 36,
                   borderRadius: 6,
                   border: 'none',
                   backgroundColor: primary,
@@ -187,11 +195,11 @@ export default function Gallery({ section, theme }) {
                     aria-label="Previous gallery image"
                     style={{
                       position: 'absolute',
-                      left: 12,
+                      left: isMobile ? 8 : 12,
                       top: '50%',
                       transform: 'translateY(-50%)',
-                      width: 42,
-                      height: 42,
+                      width: isMobile ? 38 : 42,
+                      height: isMobile ? 38 : 42,
                       borderRadius: 999,
                       border: 'none',
                       backgroundColor: 'rgba(17,24,39,0.78)',
@@ -210,11 +218,11 @@ export default function Gallery({ section, theme }) {
                     aria-label="Next gallery image"
                     style={{
                       position: 'absolute',
-                      right: 12,
+                      right: isMobile ? 8 : 12,
                       top: '50%',
                       transform: 'translateY(-50%)',
-                      width: 42,
-                      height: 42,
+                      width: isMobile ? 38 : 42,
+                      height: isMobile ? 38 : 42,
                       borderRadius: 999,
                       border: 'none',
                       backgroundColor: 'rgba(17,24,39,0.78)',

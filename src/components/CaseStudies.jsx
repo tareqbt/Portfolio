@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react'
 import SectionHeader from './SectionHeader'
 import { getThemeColors, CONTENT_MAX_WIDTH } from '../theme'
 
-function Metrics({ metrics, primary, secondary, divider, surface }) {
+function Metrics({ metrics, primary, secondary, divider, surface, isMobile = false }) {
   if (!metrics || metrics.length === 0) return null
 
   return (
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
-        gap: '0.7rem',
+        gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(140px, 1fr))',
+        gap: isMobile ? '0.55rem' : '0.7rem',
         marginTop: '0.85rem',
         paddingTop: '0.85rem',
         borderTop: `1px solid ${divider}`,
@@ -31,6 +31,15 @@ function Metrics({ metrics, primary, secondary, divider, surface }) {
 }
 
 function ImageLightbox({ image, primary, background, onClose, onPrevious, onNext }) {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 640)
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   useEffect(() => {
     if (!image) return undefined
 
@@ -61,17 +70,17 @@ function ImageLightbox({ image, primary, background, onClose, onPrevious, onNext
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '1.5rem',
+        padding: isMobile ? '0.65rem' : '1.5rem',
       }}
     >
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          width: 'min(1200px, 96vw)',
-          height: 'min(820px, 92vh)',
+          width: isMobile ? '100%' : 'min(1200px, 96vw)',
+          height: isMobile ? 'min(760px, 94dvh)' : 'min(820px, 92vh)',
           backgroundColor: background,
           borderRadius: 8,
-          padding: '1rem',
+          padding: isMobile ? '0.75rem' : '1rem',
           display: 'flex',
           flexDirection: 'column',
           gap: '0.75rem',
@@ -92,8 +101,8 @@ function ImageLightbox({ image, primary, background, onClose, onPrevious, onNext
             onClick={onClose}
             aria-label="Close enlarged image"
             style={{
-              width: 36,
-              height: 36,
+              width: isMobile ? 40 : 36,
+              height: isMobile ? 40 : 36,
               borderRadius: 6,
               border: 'none',
               backgroundColor: primary,
@@ -115,11 +124,11 @@ function ImageLightbox({ image, primary, background, onClose, onPrevious, onNext
                 aria-label="Previous image"
                 style={{
                   position: 'absolute',
-                  left: 12,
+                  left: isMobile ? 8 : 12,
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  width: 42,
-                  height: 42,
+                  width: isMobile ? 38 : 42,
+                  height: isMobile ? 38 : 42,
                   borderRadius: 999,
                   border: 'none',
                   backgroundColor: 'rgba(17,24,39,0.82)',
@@ -137,11 +146,11 @@ function ImageLightbox({ image, primary, background, onClose, onPrevious, onNext
                 aria-label="Next image"
                 style={{
                   position: 'absolute',
-                  right: 12,
+                  right: isMobile ? 8 : 12,
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  width: 42,
-                  height: 42,
+                  width: isMobile ? 38 : 42,
+                  height: isMobile ? 38 : 42,
                   borderRadius: 999,
                   border: 'none',
                   backgroundColor: 'rgba(17,24,39,0.82)',
@@ -173,7 +182,7 @@ function ImageLightbox({ image, primary, background, onClose, onPrevious, onNext
   )
 }
 
-function PresentationPhoto({ item, primary, secondary, divider, background, onOpenImage }) {
+function PresentationPhoto({ item, primary, secondary, divider, background, onOpenImage, isMobile }) {
   const photos = item.presentation_images || (
     item.presentation_image
       ? [{ image: item.presentation_image, title: item.presentation_image_title || 'Presentation photo' }]
@@ -194,7 +203,7 @@ function PresentationPhoto({ item, primary, secondary, divider, background, onOp
             onClick={() => onOpenImage(item, photo.image)}
             style={{
               display: 'flex',
-              alignItems: 'center',
+              alignItems: isMobile ? 'flex-start' : 'center',
               gap: '0.75rem',
               width: '100%',
               padding: '0.6rem',
@@ -210,15 +219,15 @@ function PresentationPhoto({ item, primary, secondary, divider, background, onOp
               src={photo.image}
               alt={title}
               style={{
-                width: 96,
-                height: 64,
+                width: isMobile ? 78 : 96,
+                height: isMobile ? 58 : 64,
                 objectFit: 'cover',
                 borderRadius: 6,
                 flexShrink: 0,
                 backgroundColor: '#fff',
               }}
             />
-            <span>
+            <span style={{ minWidth: 0 }}>
               <span style={{ display: 'block', fontSize: '0.8rem', fontWeight: 800 }}>{title}</span>
               <span style={{ display: 'block', fontSize: '0.72rem', color: secondary, opacity: 0.72 }}>Click to enlarge</span>
             </span>
@@ -262,7 +271,7 @@ function CaseStudiesFeatured({ items, primary, secondary, accent, divider, surfa
             }}
           >
             {hasImage && (
-              <div style={{ backgroundColor: surface, minHeight: isMobile ? 220 : 300, overflow: 'hidden' }}>
+              <div style={{ backgroundColor: surface, minHeight: isMobile ? 190 : 300, overflow: 'hidden' }}>
                 <img
                   src={item.image}
                   alt={item.title}
@@ -272,8 +281,8 @@ function CaseStudiesFeatured({ items, primary, secondary, accent, divider, surfa
               </div>
             )}
 
-            <div style={{ padding: isMobile ? '1.25rem' : '1.55rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <h3 style={{ color: primary, margin: 0, fontSize: '1.12rem', fontWeight: 800, lineHeight: 1.35 }}>{item.title}</h3>
+            <div style={{ padding: isMobile ? '1rem' : '1.55rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <h3 style={{ color: primary, margin: 0, fontSize: isMobile ? '1.02rem' : '1.12rem', fontWeight: 800, lineHeight: 1.35 }}>{item.title}</h3>
               {metadata && (
                 <div style={{ fontSize: '0.78rem', fontWeight: 600, color: secondary, opacity: 0.72, lineHeight: 1.45 }}>
                   {metadata}
@@ -285,7 +294,7 @@ function CaseStudiesFeatured({ items, primary, secondary, accent, divider, surfa
                 </p>
               )}
 
-              <PresentationPhoto item={item} primary={primary} secondary={secondary} divider={divider} background={background} onOpenImage={onOpenImage} />
+              <PresentationPhoto item={item} primary={primary} secondary={secondary} divider={divider} background={background} onOpenImage={onOpenImage} isMobile={isMobile} />
 
               {hasAccordion && (
                 <div>
@@ -299,7 +308,7 @@ function CaseStudiesFeatured({ items, primary, secondary, accent, divider, surfa
                       background: 'none',
                       border: `1px solid ${divider}`,
                       borderRadius: 6,
-                      padding: '0.4rem 0.75rem',
+                      padding: isMobile ? '0.55rem 0.75rem' : '0.4rem 0.75rem',
                       cursor: 'pointer',
                       color: primary,
                       fontSize: '0.8rem',
@@ -319,7 +328,7 @@ function CaseStudiesFeatured({ items, primary, secondary, accent, divider, surfa
                 </div>
               )}
 
-              <Metrics metrics={item.metrics} primary={primary} secondary={secondary} divider={divider} surface={surface} />
+              <Metrics metrics={item.metrics} primary={primary} secondary={secondary} divider={divider} surface={surface} isMobile={isMobile} />
               {item.link_url && (
                 <a href={item.link_url} target="_blank" rel="noreferrer" style={{ fontSize: '0.875rem', fontWeight: 700, color: primary, textDecoration: 'none', marginTop: 'auto', paddingTop: '0.5rem' }}>
                   View Case Study &gt;
@@ -407,6 +416,14 @@ export default function CaseStudies({ section, theme }) {
   const variant = section?.layout?.variant || 'featured'
   const title = section?.props?.title || 'Research Highlights'
   const [expandedImage, setExpandedImage] = useState(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 780)
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const openImageGroup = (item, clickedSrc = item.image) => {
     const images = [
@@ -435,7 +452,7 @@ export default function CaseStudies({ section, theme }) {
   }
 
   return (
-    <section id="case_studies" style={{ width: '100%', padding: '4rem 1.5rem' }}>
+    <section id="case_studies" style={{ width: '100%', padding: isMobile ? '3rem 1rem' : '4rem 1.5rem' }}>
       <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: '0 auto' }}>
         <SectionHeader label="RESEARCH" heading={title} description={section?.description} primary={primary} accent={accent} />
         {items.length === 0 ? (

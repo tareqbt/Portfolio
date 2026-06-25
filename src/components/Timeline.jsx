@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SectionHeader from './SectionHeader'
 import { getThemeColors, CONTENT_MAX_WIDTH } from '../theme'
 
@@ -7,9 +7,17 @@ export default function Timeline({ section, theme }) {
   const items = section?.items || []
   const sortedItems = [...items].sort((a, b) => Number(b.year) - Number(a.year))
   const title = section?.props?.title || 'Education / Timeline'
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 640)
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   return (
-    <section id="career_timeline" style={{ width: '100%', padding: '4rem 1.5rem' }}>
+    <section id="career_timeline" style={{ width: '100%', padding: isMobile ? '3rem 1rem' : '4rem 1.5rem' }}>
       <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: '0 auto' }}>
         <SectionHeader label="TIMELINE" heading={title} description={null} primary={primary} accent={accent} />
         <div style={{ display: 'grid', gap: '0.85rem' }}>
@@ -18,12 +26,12 @@ export default function Timeline({ section, theme }) {
               key={item.id || idx}
               style={{
                 display: 'grid',
-                gridTemplateColumns: '76px minmax(0, 1fr)',
-                gap: '1.1rem',
+                gridTemplateColumns: isMobile ? '1fr' : '76px minmax(0, 1fr)',
+                gap: isMobile ? '0.75rem' : '1.1rem',
                 border: `1px solid ${divider}`,
                 borderRadius: 8,
                 backgroundColor: background,
-                padding: '1.1rem',
+                padding: isMobile ? '1rem' : '1.1rem',
               }}
             >
               <div>

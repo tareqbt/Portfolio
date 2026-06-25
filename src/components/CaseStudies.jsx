@@ -30,6 +30,56 @@ function Metrics({ metrics, primary, secondary, divider, surface, isMobile = fal
   )
 }
 
+function TagList({ tags, accent, secondary, surface, divider, isMobile }) {
+  if (!tags || tags.length === 0) return null
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '0.4rem',
+        marginTop: isMobile ? '0.05rem' : 0,
+      }}
+    >
+      {tags.slice(0, isMobile ? 5 : 6).map((tag) => (
+        <span
+          key={tag}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            minHeight: 28,
+            border: `1px solid ${divider}`,
+            borderRadius: 999,
+            backgroundColor: surface,
+            color: secondary,
+            fontSize: '0.72rem',
+            fontWeight: 800,
+            lineHeight: 1,
+            padding: '0.38rem 0.6rem',
+          }}
+        >
+          {tag}
+        </span>
+      ))}
+      {tags.length > (isMobile ? 5 : 6) && (
+        <span
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            minHeight: 28,
+            color: accent,
+            fontSize: '0.72rem',
+            fontWeight: 800,
+          }}
+        >
+          +{tags.length - (isMobile ? 5 : 6)}
+        </span>
+      )}
+    </div>
+  )
+}
+
 function ImageLightbox({ image, primary, background, onClose, onPrevious, onNext }) {
   const [isMobile, setIsMobile] = useState(false)
 
@@ -271,7 +321,14 @@ function CaseStudiesFeatured({ items, primary, secondary, accent, divider, surfa
             }}
           >
             {hasImage && (
-              <div style={{ backgroundColor: surface, minHeight: isMobile ? 190 : 300, overflow: 'hidden' }}>
+              <div
+                style={{
+                  backgroundColor: surface,
+                  minHeight: isMobile ? 0 : 300,
+                  aspectRatio: isMobile ? '4 / 3' : undefined,
+                  overflow: 'hidden',
+                }}
+              >
                 <img
                   src={item.image}
                   alt={item.title}
@@ -288,6 +345,7 @@ function CaseStudiesFeatured({ items, primary, secondary, accent, divider, surfa
                   {metadata}
                 </div>
               )}
+              <TagList tags={item.tags} accent={accent} secondary={secondary} surface={surface} divider={divider} isMobile={isMobile} />
               {item.summary && (
                 <p style={{ color: secondary, opacity: 0.84, margin: 0, fontSize: '0.92rem', lineHeight: 1.65 }}>
                   {item.summary}
@@ -313,6 +371,8 @@ function CaseStudiesFeatured({ items, primary, secondary, accent, divider, surfa
                       color: primary,
                       fontSize: '0.8rem',
                       fontWeight: 800,
+                      width: isMobile ? '100%' : 'auto',
+                      justifyContent: isMobile ? 'space-between' : 'flex-start',
                     }}
                   >
                     <span>Research Details</span>

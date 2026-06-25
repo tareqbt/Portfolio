@@ -36,46 +36,46 @@ export default function Publications({ section, theme }) {
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {items.map((item, idx) => (
-            <article
-              key={item.id || idx}
-              style={{
-                border: `1px solid ${divider}`,
-                borderRadius: 8,
-                backgroundColor: background,
-                padding: '1.25rem',
-              }}
-            >
-              <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', gap: isMobile ? '0.5rem' : '1rem', flexWrap: 'wrap' }}>
-                <div style={{ minWidth: 0 }}>
-                  <div style={{ color: accent, fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                    {item.type || 'Presentation'}
+              <article
+                key={item.id || idx}
+                style={{
+                  border: `1px solid ${divider}`,
+                  borderRadius: 8,
+                  backgroundColor: background,
+                  padding: isMobile ? '1rem' : '1.25rem',
+                }}
+              >
+                <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', gap: isMobile ? '0.5rem' : '1rem', flexWrap: 'wrap' }}>
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ color: accent, fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                      {item.type || 'Presentation'}
+                    </div>
+                    <h3 style={{ color: primary, margin: '0.35rem 0 0', fontSize: isMobile ? '1rem' : '1.08rem', lineHeight: 1.35 }}>
+                      {item.title}
+                    </h3>
                   </div>
-                  <h3 style={{ color: primary, margin: '0.35rem 0 0', fontSize: isMobile ? '1rem' : '1.08rem', lineHeight: 1.35 }}>
-                    {item.title}
-                  </h3>
+                  {item.date && (
+                    <div style={{ color: secondary, opacity: 0.72, fontSize: '0.85rem', fontWeight: 700, whiteSpace: isMobile ? 'normal' : 'nowrap' }}>
+                      {item.date}
+                    </div>
+                  )}
                 </div>
-                {item.date && (
-                  <div style={{ color: secondary, opacity: 0.72, fontSize: '0.85rem', fontWeight: 700, whiteSpace: isMobile ? 'normal' : 'nowrap' }}>
-                    {item.date}
-                  </div>
+                {item.venue && (
+                  <p style={{ color: secondary, opacity: 0.82, margin: '0.55rem 0 0', fontSize: '0.92rem', lineHeight: 1.55 }}>
+                    {item.venue}
+                  </p>
                 )}
-              </div>
-              {item.venue && (
-                <p style={{ color: secondary, opacity: 0.82, margin: '0.55rem 0 0', fontSize: '0.92rem' }}>
-                  {item.venue}
-                </p>
-              )}
-              {item.authors && (
-                <p style={{ color: secondary, opacity: 0.82, margin: '0.45rem 0 0', fontSize: '0.9rem' }}>
-                  {item.authors}
-                </p>
-              )}
-              {item.link_url && (
-                <a href={item.link_url} style={{ display: 'inline-block', marginTop: '0.75rem', color: accent, fontWeight: 800, textDecoration: 'none', fontSize: '0.88rem' }}>
-                  View related research
-                </a>
-              )}
-            </article>
+                {item.authors && (
+                  <p style={{ color: secondary, opacity: 0.82, margin: '0.45rem 0 0', fontSize: '0.9rem' }}>
+                    {item.authors}
+                  </p>
+                )}
+                {item.link_url && (
+                  <a href={item.link_url} style={{ display: 'inline-block', width: isMobile ? '100%' : 'auto', marginTop: '0.85rem', color: accent, fontWeight: 800, textDecoration: 'none', fontSize: '0.88rem', textAlign: isMobile ? 'center' : 'left', border: isMobile ? `1px solid ${divider}` : 'none', borderRadius: isMobile ? 6 : 0, padding: isMobile ? '0.65rem 0.8rem' : 0 }}>
+                    View related research
+                  </a>
+                )}
+              </article>
             ))}
           </div>
         )}

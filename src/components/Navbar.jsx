@@ -23,6 +23,17 @@ export default function Navbar({ section, theme }) {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  useEffect(() => {
+    if (!isOpen) return undefined
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setIsOpen(false)
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen])
+
   const ctaLabel = props.cta_label ?? props.ctaLabel ?? props.CTA
   const ctaUrl = props.cta_url ?? props.ctaUrl
 
@@ -31,9 +42,12 @@ export default function Navbar({ section, theme }) {
   const navOuterStyle = {
     width: '100%',
     borderBottom: `1px solid ${divider}`,
-    position: 'relative',
-    backgroundColor: background,
-    zIndex: 100,
+    position: 'sticky',
+    top: 0,
+    backgroundColor: isMenuCollapsed ? 'rgba(255,255,255,0.96)' : background,
+    backdropFilter: isMenuCollapsed ? 'saturate(160%) blur(14px)' : 'none',
+    zIndex: 200,
+    boxShadow: isOpen ? '0 12px 28px rgba(17,24,39,0.08)' : 'none',
   }
 
   const navInnerStyle = {
@@ -59,11 +73,11 @@ export default function Navbar({ section, theme }) {
           <span
             style={{
               display: 'block',
-              maxWidth: isMenuCollapsed ? 'min(58vw, 260px)' : 'none',
+              maxWidth: isMenuCollapsed ? 'min(62vw, 280px)' : 'none',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
-              fontSize: isMenuCollapsed ? '1rem' : '1.125rem',
+              fontSize: isMenuCollapsed ? '1.02rem' : '1.125rem',
               fontWeight: 700,
               color: primary,
             }}
@@ -92,8 +106,9 @@ export default function Navbar({ section, theme }) {
                   fontSize: '0.875rem',
                   color: primary,
                   transition: 'color 0.2s',
-                  padding: isMenuCollapsed ? '0.72rem 0' : 0,
+                  padding: isMenuCollapsed ? '0.8rem 0' : 0,
                   borderBottom: isMenuCollapsed ? `1px solid ${divider}` : 'none',
+                  fontWeight: isMenuCollapsed ? 700 : 400,
                 }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = accent)}
                 onMouseLeave={(e) => (e.currentTarget.style.color = primary)}
@@ -161,6 +176,7 @@ export default function Navbar({ section, theme }) {
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={isOpen}
+            aria-controls="mobile-nav-menu"
             style={{
               marginLeft: 'auto',
               background: accent,
@@ -168,8 +184,8 @@ export default function Navbar({ section, theme }) {
               borderRadius: 8,
               cursor: 'pointer',
               padding: 9,
-              width: 42,
-              height: 42,
+              width: 44,
+              height: 44,
               color: '#fff',
               display: 'flex',
               alignItems: 'center',
@@ -195,6 +211,7 @@ export default function Navbar({ section, theme }) {
         {/* Collapsible dropdown */}
         {isMenuCollapsed && isOpen && (
           <div
+            id="mobile-nav-menu"
             style={{
               position: 'absolute',
               left: 0,

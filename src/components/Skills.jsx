@@ -23,7 +23,6 @@ export default function Skills({ section, theme }) {
   const mobileCols = layout?.columns?.mobile || 2
   const activeCols = isSmallMobile ? 1 : isMobile ? mobileCols : desktopCols
   const gap = isMobile ? '0.75rem' : layout?.gap || '1.5rem'
-  const cardWidth = `calc((100% - (${gap} * ${activeCols - 1})) / ${activeCols})`
   const categoryOrder = ['Simulation & Modeling', 'Programming & Computing', 'Engineering Tools', 'Research Methods']
   const groupedItems = items.reduce((groups, skill) => {
     const category = skill.category || 'Research Methods'
@@ -37,10 +36,9 @@ export default function Skills({ section, theme }) {
   ]
 
   const containerStyle = {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: 'grid',
+    gridTemplateColumns: `repeat(${activeCols}, minmax(0, 1fr))`,
     gap,
-    justifyContent: 'flex-start',
     padding: isMobile ? '0.75rem 0 0' : '1rem 0 0',
     width: '100%',
   }
@@ -55,10 +53,8 @@ export default function Skills({ section, theme }) {
     backgroundColor: background,
     borderRadius: 8,
     minWidth: 0,
+    minHeight: isMobile ? 60 : 66,
     transition: 'border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease',
-    flexBasis: cardWidth,
-    flexGrow: 0,
-    flexShrink: 0,
   }
 
   const renderIcon = (skill) => {
@@ -69,7 +65,7 @@ export default function Skills({ section, theme }) {
           alt=""
           style={{
             width: 'auto',
-            maxWidth: isMobile ? 72 : 86,
+            maxWidth: isMobile ? 64 : 86,
             height: isMobile ? 30 : 34,
             maxHeight: 40,
             objectFit: 'contain',
@@ -116,9 +112,14 @@ export default function Skills({ section, theme }) {
         {items.length > 0 ? (
           categories.map((category) => (
             <div key={category}>
-              <h3 style={{ color: primary, fontSize: '0.9rem', fontWeight: 800, margin: 0, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                {category}
-              </h3>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem' }}>
+                <h3 style={{ color: primary, fontSize: '0.9rem', fontWeight: 800, margin: 0, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                  {category}
+                </h3>
+                <span style={{ color: secondary, opacity: 0.68, fontSize: '0.75rem', fontWeight: 800 }}>
+                  {groupedItems[category].length}
+                </span>
+              </div>
               <div style={containerStyle}>
                 {groupedItems[category].map((skill, idx) => (
                   <div

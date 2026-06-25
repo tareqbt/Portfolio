@@ -246,31 +246,124 @@ export default function Hero({ section, theme }) {
   }
 
   if (isMobile) {
+    const p = props || {}
+
     return (
       <section
         id="hero"
         style={{
           width: '100%',
-          padding: '2.35rem 1rem 3.25rem',
+          padding: '2.2rem 1rem 3.1rem',
           backgroundColor: background,
           borderBottom: `1px solid ${divider}`,
         }}
       >
-        <div style={{ maxWidth: 560, margin: '0 auto' }}>
+        <div style={{ maxWidth: 620, margin: '0 auto' }}>
           <div
             style={{
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center',
-              gap: '1.4rem',
-              textAlign: 'center',
+              gap: '1.15rem',
+              textAlign: 'left',
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-              {renderSlotItem('image')}
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: isSmallMobile ? 'minmax(0, 1fr) 104px' : 'minmax(0, 1fr) 132px',
+                gap: isSmallMobile ? '0.9rem' : '1.1rem',
+                alignItems: 'center',
+              }}
+            >
+              <div style={{ minWidth: 0 }}>
+                {p.name && (
+                  <h1
+                    style={{
+                      color: primary,
+                      fontSize: isSmallMobile ? '2rem' : '2.35rem',
+                      fontWeight: 800,
+                      lineHeight: 1.05,
+                      margin: 0,
+                    }}
+                  >
+                    {p.name}
+                  </h1>
+                )}
+                {p.role && (
+                  <p style={{ margin: '0.7rem 0 0', color: primary, fontSize: '1rem', fontWeight: 800, lineHeight: 1.35 }}>
+                    {p.role}
+                  </p>
+                )}
+                {(p.lab_name || p.institution) && (
+                  <p style={{ margin: '0.28rem 0 0', color: secondary, opacity: 0.8, fontSize: '0.86rem', lineHeight: 1.45 }}>
+                    {p.lab_name && p.lab_url ? (
+                      <a href={p.lab_url} target="_blank" rel="noreferrer" style={{ color: primary, fontWeight: 800 }}>
+                        {p.lab_name}
+                      </a>
+                    ) : (
+                      p.lab_name
+                    )}
+                    {p.lab_name && p.institution ? ', ' : ''}
+                    {p.institution}
+                  </p>
+                )}
+              </div>
+
+              {p.image && (
+                <div
+                  style={{
+                    width: '100%',
+                    aspectRatio: '4 / 5',
+                    overflow: 'hidden',
+                    borderRadius: 8,
+                    border: `1px solid ${divider}`,
+                    backgroundColor: background,
+                    boxShadow: '0 14px 30px rgba(17,24,39,0.12)',
+                  }}
+                >
+                  <img
+                    src={p.image}
+                    alt={p.name || 'hero image'}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      objectPosition: 'center 18%',
+                      display: 'block',
+                    }}
+                  />
+                </div>
+              )}
             </div>
+
             <div style={{ width: '100%' }}>
-              {renderSlotItem('text')}
+              {p.pi && (
+                <p style={{ margin: 0, color: secondary, opacity: 0.82, fontSize: '0.88rem', lineHeight: 1.5 }}>
+                  PI: <span style={{ color: primary, fontWeight: 800 }}>{p.pi}</span>
+                </p>
+              )}
+              {p.hero_text && (
+                <p style={{ margin: p.pi ? '0.85rem 0 0' : 0, color: secondary, opacity: 0.88, lineHeight: 1.62, fontSize: '0.96rem' }}>
+                  {p.hero_text}
+                </p>
+              )}
+              {p.current_project && (
+                <div
+                  style={{
+                    marginTop: '1rem',
+                    borderLeft: `3px solid ${accent}`,
+                    backgroundColor: `${accent}08`,
+                    borderRadius: 6,
+                    padding: '0.7rem 0.8rem 0.7rem 0.85rem',
+                    color: secondary,
+                    fontSize: '0.82rem',
+                    lineHeight: 1.5,
+                  }}
+                >
+                  <span style={{ display: 'block', color: primary, fontWeight: 800 }}>Current Research</span>
+                  {p.current_project}
+                </div>
+              )}
               {renderSlotItem('cta')}
             </div>
           </div>
